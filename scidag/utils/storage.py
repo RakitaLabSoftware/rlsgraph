@@ -1,4 +1,5 @@
 from typing import Any
+
 from omegaconf import DictConfig
 
 
@@ -28,16 +29,18 @@ class Storage(MetaBorg):
     """
 
     def __init__(self, cfg: DictConfig) -> None:
-        self.task_name = cfg.name
-        self.dependencies = cfg.dependencies
-        self.dict = {}
+        self.task_name: str = cfg.name
+        self.dependencies: dict[str, Any] = cfg.dependencies
+        self.dict: dict[str, Any] = {}
 
-    def put(self, name: str, value: Any) -> None:
+    def put(self, value: Any) -> None:
         """
         Put value with name in Storage.
         """
+        self.dict[self.task_name] = value
 
     def get(self, name: str) -> Any:
         """
         Get value from task it depends storage by it's name.
         """
+        return self.dict[name]

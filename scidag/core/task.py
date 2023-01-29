@@ -1,28 +1,43 @@
-from scidag.core._runnable import Runnable
+from hydra.utils import instantiate
 from omegaconf import DictConfig
+from typing import Any
+from scidag.utils.runnable import Runnable
 from scidag.utils.storage import Storage
 
 
 class Task(Runnable):
-    def __init__(self, cfg: DictConfig) -> None:
-        self.cfg = cfg
-        self.storage = Storage(cfg)
+    """
+    Task
+    """
+
+    def __init__(self, content: Any) -> None:
+        """
+        _summary_
+
+        Parameters
+        ----------
+        content : Any
+            _description_
+        """
+        self.content = content
+        self.cfg = self.create_config(self)
+        self.storage = Storage(self.cfg)
+
+    @classmethod
+    def from_config(cls, cfg: DictConfig, **kwargs) -> "Task":
+        content = instantiate(cfg.content, kwargs)
+        return Task(
+            content,
+        )
 
     def run(self) -> None:
         """
         Gets inputs from storage runs function and put outputs to storage
         """
+        # TODO: Check if input values is same as specified in dependencies
+        inputs = self.storage.get(self.cfg.dependencies)
+        res = self.content(*inputs)
+        self.storage.put(res)
 
-    @property
-    def available_tasks(self) -> list[str]:
-        r"""
-        Shows available tasks to add after this task
-
-        Returns
-        -------
-        list[str]
-            Available tasks after this task
-        Example
-        -------
-        """
-        # Find things in StorageGraph that
+    def save(self):
+        return self.cfg
