@@ -1,36 +1,39 @@
+import asyncio
+from typing import Any
+
 from hydra.utils import instantiate
 from omegaconf import DictConfig
-from typing import Any
-from scidag.utils.runnable import Runnable
+
+from scidag.utils.runnable import BaseElement
 from scidag.utils.storage import Storage
+from scidag.utils.configurable import create_config
 
 
-class Task(Runnable):
+class Node(BaseElement):
     """
-    Task
+    Node of DAG
     """
 
-    def __init__(self, content: Any) -> None:
+    def __init__(
+        self,
+        content: Any,
+    ) -> None:
         """
-        _summary_
-
         Parameters
         ----------
         content : Any
             _description_
         """
         self.content = content
-        self.cfg = self.create_config(self)
+        self.cfg = create_config(self)
         self.storage = Storage(self.cfg)
 
     @classmethod
-    def from_config(cls, cfg: DictConfig, **kwargs) -> "Task":
+    def from_config(cls, cfg: DictConfig, **kwargs) -> "Node":
         content = instantiate(cfg.content, kwargs)
-        return Task(
-            content,
-        )
+        return Node(content)
 
-    def run(self) -> None:
+    async def run(self) -> None:
         """
         Gets inputs from storage runs function and put outputs to storage
         """
