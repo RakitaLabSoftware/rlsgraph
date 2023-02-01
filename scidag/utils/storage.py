@@ -1,6 +1,8 @@
 from typing import Any
-
 from omegaconf import DictConfig
+
+
+# rewrite Hierarcial Storage
 
 
 class MetaBorg(type):
@@ -23,7 +25,11 @@ class MetaBorg(type):
         return instance
 
 
-class Storage(MetaBorg):
+class GlobalStorage(MetaBorg):
+    pass
+
+
+class Storage(GlobalStorage):
     """
     Storage that contains inputs and outputs of each task.
     """

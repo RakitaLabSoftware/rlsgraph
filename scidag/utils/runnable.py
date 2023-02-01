@@ -1,7 +1,9 @@
 import abc
 
+__all__ = ["BaseElement"]
 
-class Runnable(abc.ABC):
+
+class BaseElement(abc.ABC):
     @abc.abstractmethod
-    def run(self) -> None:
+    async def run(self):
         pass

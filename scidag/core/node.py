@@ -25,7 +25,7 @@ class Node(BaseElement):
             _description_
         """
         self.content = content
-        self.cfg = create_config(self)
+        self.cfg = build_config(self)
         self.storage = Storage(self.cfg)
 
     @classmethod

@@ -1,14 +1,14 @@
 from omegaconf import DictConfig, OmegaConf
 
-from scidag.core.task import Task
+from scidag.core.node import Node
 
 
 def test_task_run():
     cfg: DictConfig = OmegaConf.load(path)
     dummy_val = "dummy"
-    task = Task(cfg)
-    task.run()
-    assert dummy_val == task.storage.get(cfg.name)
+    node = Node(cfg)
+    node.run()
+    assert dummy_val == node.storage.get(cfg.name)
 
 
 def tast_avaliable_tasks():
