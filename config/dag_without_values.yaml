@@ -1,0 +1,42 @@
+info:
+  root: ../data/
+
+dag:
+  node:
+    node_A:
+      func:
+        _target_: my.func.1
+        a: true
+        b: "electrons"
+      values:
+        x: int
+        y: float
+      edges:
+        parent: [null]
+        child: [node_b1.y, node_b2.x]
+    node_B:
+      func:
+        _target_: my.func.2
+        c: 10
+        d: "MonteCarlo"
+      values:
+        x: int
+      edges:
+        parent: [task_A]
+        child: [task_C.x]
+    task_URL:
+      func:
+        _target_: network.downloader
+
+    task_C:
+      func:
+        _target_: scikit_learn.func.3
+        c: "fast"
+        d: "Gradient"
+      values:
+        x: int
+        y: int
+        z: { type:np.ndarray }
+      edges:
+        parent: [task_A, task_B]
+        child: [null]

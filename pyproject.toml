@@ -9,6 +9,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 hydra-zen = "^0.9.1"
+networkx = "^3.0"
+nest-asyncio = "^1.5.6"
+joblib = "^1.2.0"
+uvloop = "^0.17.0"
+
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"

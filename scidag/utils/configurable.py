@@ -1,22 +1,27 @@
 # import inspect
-from omegaconf import OmegaConf
-from typing import Any, Callable, Type
 import inspect
+import typing
 from dataclasses import dataclass, field, make_dataclass
+from typing import Any, Callable, Type
 
-__all__ = ["DynamicDataClassFactory"]
+import hydra_zen as hz
+from omegaconf import DictConfig, OmegaConf
+
+__all__ = ["make_config"]
+
+ClassOrFunc = Type[Callable[..., Any]] | Type[object]
 
 
 @dataclass
 class NodeConfig:
-    __target__: str
+    _target_: str
     arguments: dict[str, Any] = field(default_factory=lambda: {"none": None})
 
 
 class DynamicDataClassFactory:
     def __init__(
         self,
-        obj: Type[Callable[..., Any]] | Type[object],
+        obj: ClassOrFunc,
         override: dict[str, Any] | None = None,
     ):
         self.obj = obj
@@ -30,7 +35,7 @@ class DynamicDataClassFactory:
     def create_dataclass(self):
 
         # Add fields for required parameters
-        fields: list[Any] = [("__target__", Any, self.obj.__module__)]
+        fields: list[Any] = [("_target_", Any, "path.to.module")]
         arguments: dict[str, Any] = {}
         for name, param in self.sig.parameters.items():
             if param.kind == param.POSITIONAL_OR_KEYWORD:
@@ -50,19 +55,25 @@ class DynamicDataClassFactory:
         )
         if "kwargs" in self.sig.parameters:
             fields.append(("kwargs"))
+        ret = make_dataclass("Config", fields=fields, bases=(NodeConfig,))
+        return ret
 
-        return make_dataclass("Config", fields=fields, bases=(NodeConfig,))
+
+def make_config(obj: ClassOrFunc):
+    cfg = DynamicDataClassFactory(obj).create_dataclass()
+    return cfg()
 
 
 if __name__ == "__main__":
 
-    def dummy(a: Any, b: int, mode: str = "sum"):
+    def dummy(a: Any, b: int, mode: str = "sum", example: int = 43):
         if mode == "sum":
             return a + b
 
-    Config = DynamicDataClassFactory(dummy).create_dataclass()
-    cfg = Config()
-    print("cfg:", type(cfg))
-    new_cfg = OmegaConf.structured(cfg)
-    new_cfg.mode = 10
-    print(new_cfg)
+    # cfg = make_config(dummy)
+    # print(cfg)
+    # new = OmegaConf.structured(cfg)
+    cfg = hz.builds(dummy, zen_partial=True, populate_full_signature=True)
+    print(hz.to_yaml(cfg))
+    dummy = hz.instantiate(cfg)
+    val = dummy()
