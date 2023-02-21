@@ -9,17 +9,35 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 hydra-zen = "^0.9.1"
-networkx = "^3.0"
-nest-asyncio = "^1.5.6"
-joblib = "^1.2.0"
 uvloop = "^0.17.0"
 
+[tool.poetry.group.pandas]
+optional = false
+
+[tool.poetry.group.pandas.dependencies]
+pandas = "^1.5.3"
+
+[tool.poetry.group.dev]
+optional = true
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"
 pytest = "^7.2.1"
 isort = "^5.11.4"
+
+[tool.poetry.group.jupyter]
+optional = true
+
+[tool.poetry.group.jupyter.dependencies]
+nest-asyncio = "^1.5.6"
 ipykernel = "^6.20.2"
+
+
+[tool.poetry.group.redis]
+optional = true
+
+[tool.poetry.group.redis.dependencies]
+redis = "^4.5.1"
 
 [build-system]
 requires = ["poetry-core"]

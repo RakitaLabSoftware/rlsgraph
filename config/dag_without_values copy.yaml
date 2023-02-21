@@ -8,11 +8,11 @@ dag:
         _target_: my.func.1
         a: true
         b: "electrons"
-      values:
-        x: int
-        y: float
       edges:
         child: [task_B.x, task_C.z]
+        value_types:
+          x: int
+          y: float
     node_B:
       func:
         _target_: my.func.2

@@ -1,112 +1,122 @@
 import asyncio
+from typing import Any, Literal
 
-import networkx as nx
-from omegaconf import DictConfig
+from hydra_zen import to_yaml
+from omegaconf import DictConfig, OmegaConf
 
-from scidag.core.node import Node
-from scidag.utils.runnable import BaseElement
-from scidag.utils.storage import DataStorage
+from scidag.core.base import ANode
+from scidag.storage.build import build_storage
+from scidag.utils.algo import topological_sort
+from scidag.utils.configurable import make_dag_config, DagConfig
 
 
-class DAG(BaseElement):
+def build_nodes(cfg) -> dict[str, ANode]:
+    nodes = {}
+    for name, node in cfg.dag:
+        nodes[name] = ANode.from_config(node)
+    return nodes
+
+
+def build_edges(cfg) -> dict[str, Any]:
+    edges = {}
+    for name, node in cfg.dag:
+        edges[name] = node.edges
+    return edges
+
+
+class DAG:
     """
     Directed Acyclic Graph
     """
 
     def __init__(
-        self, graph: nx.DiGraph | None = None, storage: DataStorage | None = None
+        self,
+        nodes: dict[str, ANode] | None = None,
+        edges: dict[str, Any] | None = None,
+        storage_type: Literal["CSV", "Dict", "DB"] = "CSV",
     ) -> None:
-        self.graph = graph if graph is not None else nx.DiGraph()
-        self.storage = storage if storage is not None else DataStorage()
+        self.nodes = nodes if nodes is not None else {}
+        self.edges = edges if edges is not None else {}
+        self.storage = build_storage(storage_type)
 
     @classmethod
-    def from_config(cls, cfg: DictConfig) -> "DAG":
-        r"""
-        Build :class:`DAG` by provided config
+    def from_config(cls, cfg: DagConfig) -> "DAG":
+        nodes = build_nodes(cfg)
+        edges = build_edges(cfg)
+        return DAG(nodes, edges)
 
-        Parameters
-        ----------
-        cfg : DictConfig
-            _description_
-        """
-        graph = build_graph(cfg)
-        storage = DataStorage()
-        return DAG(graph, storage)
+    def to_config(self) -> DagConfig:
+        return make_dag_config(self)
+        return OmegaConf.structured(make_dag_config(self))
 
-    def get_node(self, node_name: str):
-        """Get Task by its name"""
-        if node_name not in self.graph.nodes.keys():
+    @property
+    def all_nodes(self) -> list[str]:
+        return list(self.nodes.keys())
+
+    def get_node(self, node_name: str) -> ANode:
+        if node_name not in self.nodes.keys():
             raise KeyError(
                 f"Node named {node_name} is not present in this DAG. Try `dag.all_nodes` to see all available nodes"
             )
-        return self.graph.nodes[node_name]["node"]
+        return self.nodes[node_name]
 
-    def add(self, node: Node) -> None:
-        r"""Add :class:`scidag.Node` to pool of nodes"""
-        self.graph.add_node(node.name, node=node)
-        self.storage.add_node(node.name, node=node)
+    def add(self, node: ANode) -> None:
+        if node.name in self.nodes.keys():
+            raise KeyError(
+                f"This node_name = {node.name} is already reserved for {self.nodes[node.name]}"
+            )
+        node.storage = self.storage
+        self.nodes[node.name] = node
+        self.edges[node.name] = []
 
-    def remove(self, node: Node) -> None:
-        r"""Remove :class:`scidag.Node` from this dag"""
-        self.graph.remove_node(node.name)
-        self.storage.remove_node(node.name)
+    def remove(self, node: ANode) -> None:
+        if node.name not in self.nodes:
+            KeyError(f"Node with name {node.name} not stored in this dag.")
+        del self.nodes[node.name]
 
-    def connect(self, u_node_name: str, v_node_name: str) -> None:
-        """
-        Connect dependencies of two nodes
-
-        Parameters
-        ----------
-        u_node_name : str
-            _description_
-        v_node_name : str
-            _description_
-        """
+    def connect(self, source: str, target: str) -> None:
         # get nodes
-        v_node_name, target_variable_name = v_node_name.split(".")
-        v_node = self.get_node(v_node_name)
-        u_node = self.get_node(u_node_name)
-
+        # TODO: TypeCheck
         # add edge to graph
-        self.graph.add_edge(
-            u_node.name, v_node.name, target_variable=target_variable_name
-        )
-        self.storage.add_edge(
-            u_node.name, v_node.name, target_variable=target_variable_name
-        )
+        self.edges[source].append(target)
 
-    def disconnect(self, u_node_name: str, v_node_name: str) -> None:
+        target, variable = target.split(".")
+        self.storage.add_dependency(target, variable, source)
+
+    def disconnect(self, source: str, target: str) -> None:
         # get nodes
-        v_node_name, v_node_prefix = v_node_name.split(".")
-        v_node = self.get_node(v_node_name)
-        u_node = self.get_node(u_node_name)
+        target, variable = target.split(".")
 
         # remove edge from self.graph
-        self.graph.remove_edge(u_node.name, v_node.name)
-        self.storage.remove_edge(u_node.name, v_node.name)
+        if not (self.nodes[source] or self.nodes[target]):
+            KeyError(f"Node with name {source} or {target} not stored in this dag.")
+        self.storage.remove_dependency(target, variable, source)
+
+    def __call__(self) -> None:
+        asyncio.run(self.run())
+
+    def topological_sort(self):
+        self.nodes = {
+            key: self.nodes[key]
+            for key in topological_sort(self.nodes, self.edges)
+            if key in self.nodes
+        }
+
+    async def run(self) -> None:
+        # self.topological_sort()
+        # await asyncio.gather(*[task.run() for task in self.nodes.values()])
+        try:
+            await asyncio.gather(*[task.run() for task in self.nodes.values()])
+        except Exception as exc:
+            exc.add_note(f"Dag was failed due to {exc}")
+        finally:
+            self.save()
+
+    def save(self):
+        self.storage.save()
 
     def get_available_nodes(self, node_name: str) -> list[str] | None:
-        r"""
-        Shows available tasks to add after this task
-
-        Returns
-        -------
-        list[str] | None
-            Available tasks after this task
-        """
         # Find things in StorageGraph that
         # 1. Find disconnected notes
         # 2. Match it dependencies type with node_name
         pass
-
-    def __call__(self) -> None:
-        """Run dag with logging and saving configuration file"""
-        asyncio.run(self.run())
-
-    async def run(self) -> None:
-        tasks = list(nx.topological_sort(self.graph))
-        await asyncio.gather(*[task.run() for task in tasks])
-
-    @property
-    def all_nodes(self):
-        return list(self.graph.nodes.keys())
