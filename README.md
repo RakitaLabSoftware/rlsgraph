@@ -1,6 +1,25 @@
 # scidag
-![image](https://user-images.githubusercontent.com/32885168/214123933-ff8306af-8aa4-4e7d-890b-7c5e0282dd01.png)
 
-## Doc
+## Installation
 
-## Examples
+Install via
+
+- pip:
+
+```bash
+pip install scidag
+```
+
+- poetry:
+
+```bash
+poetry add scidag
+```
+
+- build from source:
+
+``` bash
+git clone https://github.com/RakitaLabSoftware/scidag.git scidag
+cd scidag
+poetry install 
+```
