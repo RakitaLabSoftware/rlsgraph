@@ -9,10 +9,9 @@ dag:
         a: true
         b: "electrons"
       edges:
-        child: [task_B.x, task_C.z]
-        value_types:
-          x: int
-          y: float
+        child:
+          - task_B.x
+          - task_C.z
     node_B:
       func:
         _target_: my.func.2

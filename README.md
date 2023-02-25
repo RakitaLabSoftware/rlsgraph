@@ -1,4 +1,5 @@
 # scidag
+<!-- add badges -->
 
 ## Installation
 

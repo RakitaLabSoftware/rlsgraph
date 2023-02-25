@@ -1,7 +1,26 @@
 import abc
+from dataclasses import dataclass, field
+from functools import cache
+import inspect
 from typing import Any, Self
+from scidag.core.variable import Variable
 
 from scidag.storage import Storage
+
+
+def build_io(obj) -> tuple[dict[str, Variable] | None, Variable]:
+    sig = inspect.signature(obj)
+    inputs = {}
+    for param_name, param in sig.parameters.items():
+        if param.default is inspect.Signature.empty:
+            param_type = (
+                param.annotation if param.annotation is not inspect._empty else None
+            )
+            inputs[param_name] = Variable(type=str(param_type))
+    output = Variable(str(sig.return_annotation))
+    if len(inputs) == 0:
+        return None, output
+    return inputs, output
 
 
 class Base(abc.ABC):
@@ -20,21 +39,19 @@ class Base(abc.ABC):
         Build :class:`Self` by provided config
         """
 
+    def to_config(self, cfg: Any) -> Any:
+        pass
 
-class ANode(abc.ABC):
+
+class ANode(Base):
     """
     Node of DAG
     """
 
     name: str
     storage: Storage
-
-    @classmethod
-    @abc.abstractmethod
-    def from_config(cls, cfg: Any) -> Self:
-        r"""
-        Build :class:`scidag.Node` by provided config
-        """
+    inputs: dict[str, Variable] | None
+    outputs: Variable
 
     @abc.abstractmethod
     def set_storage(self, storage: Storage) -> None:
@@ -47,14 +64,7 @@ class ANode(abc.ABC):
         """
 
 
-class AbcDAG(abc.ABC):
-    @classmethod
-    @abc.abstractmethod
-    def from_config(cls, cfg: Any) -> Self:
-        r"""
-        Build :class:`scidag.DAG` by provided config
-        """
-
+class AGraph(Base):
     @property
     @abc.abstractmethod
     def all_nodes(self):
@@ -101,8 +111,4 @@ class AbcDAG(abc.ABC):
 
     @abc.abstractclassmethod
     async def run(self) -> None:
-        pass
-
-    @abc.abstractmethod
-    async def notify(self) -> None:
         pass

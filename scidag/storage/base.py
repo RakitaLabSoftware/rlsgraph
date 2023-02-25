@@ -42,3 +42,12 @@ class Storage(abc.ABC):
     @abc.abstractmethod
     def save(self) -> None:
         pass
+
+    @abc.abstractmethod
+    def show(self):
+        pass
+
+    @classmethod
+    @abc.abstractmethod
+    def from_config(cls, cfg) -> "Storage":
+        pass

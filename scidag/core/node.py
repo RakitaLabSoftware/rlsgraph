@@ -1,54 +1,26 @@
-import inspect
-from dataclasses import dataclass, field
-from functools import cache
 from typing import Any, Callable
 
 from hydra.utils import instantiate
 
-from scidag.core.base import ANode
+from scidag.core.base import ANode, build_io
 from scidag.storage import Storage
 from scidag.utils.configurable import NodeConfig, make_node_config
 from scidag.utils.types import AnyCallable
 
 
-@dataclass
-class Variable:
-    name: str
-    type: str
-    _value: Any = field(init=False)
-
-    @property
-    @cache
-    def value(self) -> Any:
-        return self._value
-
-    @value.setter
-    def value(self, value) -> None:
-        if type(value) != self.type:
-            raise TypeError(
-                f"Type of {self.name} should be {self.type} not {type(value)}"
-            )
-        self.value = value
-
-
-def _build_io(obj) -> tuple:
-    sig = inspect.signature(obj)
-    inputs = {}
-    for param_name, param in sig.parameters.items():
-        if param.default is inspect.Signature.empty:
-            param_type = (
-                param.annotation if param.annotation is not inspect._empty else None
-            )
-            inputs[param_name] = Variable(param_name, type=str(param_type))
-    output = Variable("out", sig.return_annotation)
-    return inputs, output
+def build_node(cfg: NodeConfig):
+    return Node.from_config(cfg)
 
 
 class Node(ANode):
+    """
+    Base node Class
+    """
+
     def __init__(self, name: str, content: Callable[..., Any]) -> None:
         self.name = name
         self.content = content
-        self.build_io()
+        self.inputs, self.outputs = build_io(self.content)
 
     @classmethod
     def from_config(cls, cfg: NodeConfig) -> "Node":
@@ -62,13 +34,14 @@ class Node(ANode):
     def set_storage(self, storage: Storage) -> None:
         self.storage = storage
 
+    async def get_inputs(self):
+        res = await self.storage.get(self.name)
+        if self.inputs is not None:
+            for name in self.inputs.keys():
+                self.inputs[name].value = res[name]
+        return res
+
     async def run(self) -> None:
-        # TODO: Check if input values is same as specified in dependencies
-        if self.storage is None:
-            raise RuntimeError(f"self.storage is not set")
-        inputs = await self.storage.get(self.name)
+        inputs = await self.get_inputs()
         outputs = self.content(**inputs)
         self.storage.store(self.name, outputs)
-
-    def build_io(self) -> None:
-        self.inputs, self.outputs = _build_io(self.content)

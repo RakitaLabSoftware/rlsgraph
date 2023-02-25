@@ -1,30 +1,35 @@
 import asyncio
-from typing import Any, Literal
+from typing import Any
 
-from hydra_zen import to_yaml
-from omegaconf import DictConfig, OmegaConf
+import nest_asyncio
+import uvloop
+from omegaconf import OmegaConf
 
-from scidag.core.base import ANode
-from scidag.storage.build import build_storage
-from scidag.utils.algo import topological_sort
-from scidag.utils.configurable import make_dag_config, DagConfig
+from scidag.core.node import build_node
+from scidag.core.base import AGraph, ANode
+from scidag.storage import Storage, build_storage
+from scidag.storage.csv_storage import CSVStorage
+from scidag.utils.configurable import DagConfig, make_dag_config
+from scidag.utils.types import AnyCallable
+
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 
 def build_nodes(cfg) -> dict[str, ANode]:
     nodes = {}
-    for name, node in cfg.dag:
-        nodes[name] = ANode.from_config(node)
+    for name, node_cfg in cfg.dag.items():
+        nodes[name] = build_node(node_cfg)
     return nodes
 
 
 def build_edges(cfg) -> dict[str, Any]:
     edges = {}
-    for name, node in cfg.dag:
+    for name, node in cfg.dag.items():
         edges[name] = node.edges
     return edges
 
 
-class DAG:
+class DAG(AGraph):
     """
     Directed Acyclic Graph
     """
@@ -33,25 +38,31 @@ class DAG:
         self,
         nodes: dict[str, ANode] | None = None,
         edges: dict[str, Any] | None = None,
-        storage_type: Literal["CSV", "Dict", "DB"] = "CSV",
+        storage: Storage | None = None,
     ) -> None:
         self.nodes = nodes if nodes is not None else {}
         self.edges = edges if edges is not None else {}
-        self.storage = build_storage(storage_type)
+        self.storage = storage if storage is not None else CSVStorage()
+        for node in self.nodes.values():
+            node.storage = self.storage
 
     @classmethod
     def from_config(cls, cfg: DagConfig) -> "DAG":
         nodes = build_nodes(cfg)
         edges = build_edges(cfg)
-        return DAG(nodes, edges)
+        storage = build_storage(cfg)
+        return DAG(nodes, edges, storage)
 
     def to_config(self) -> DagConfig:
-        return make_dag_config(self)
         return OmegaConf.structured(make_dag_config(self))
 
     @property
     def all_nodes(self) -> list[str]:
         return list(self.nodes.keys())
+
+    @property
+    def all_edges(self):
+        pass
 
     def get_node(self, node_name: str) -> ANode:
         if node_name not in self.nodes.keys():
@@ -59,6 +70,10 @@ class DAG:
                 f"Node named {node_name} is not present in this DAG. Try `dag.all_nodes` to see all available nodes"
             )
         return self.nodes[node_name]
+
+    def _add(self, obj: AnyCallable):
+        # TODO: add wrapper
+        pass
 
     def add(self, node: ANode) -> None:
         if node.name in self.nodes.keys():
@@ -76,11 +91,24 @@ class DAG:
 
     def connect(self, source: str, target: str) -> None:
         # get nodes
-        # TODO: TypeCheck
-        # add edge to graph
-        self.edges[source].append(target)
-
         target, variable = target.split(".")
+        source_node = self.get_node(source)
+        target_node = self.get_node(target)
+
+        if target_node.inputs is None:
+            raise KeyError
+
+        in_type = target_node.inputs[variable].type
+        out_type = source_node.outputs.type
+
+        if out_type != in_type:
+            raise TypeError(
+                f"Node with outputs of type:{out_type} can't be connected to {in_type}"
+            )
+
+        # add edge to graph
+        self.edges[source].append(target + "." + variable)
+
         self.storage.add_dependency(target, variable, source)
 
     def disconnect(self, source: str, target: str) -> None:
@@ -95,24 +123,21 @@ class DAG:
     def __call__(self) -> None:
         asyncio.run(self.run())
 
-    def topological_sort(self):
-        self.nodes = {
-            key: self.nodes[key]
-            for key in topological_sort(self.nodes, self.edges)
-            if key in self.nodes
-        }
+    def nb_run(self) -> None:
+        nest_asyncio.apply()
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.run())
 
     async def run(self) -> None:
-        # self.topological_sort()
-        # await asyncio.gather(*[task.run() for task in self.nodes.values()])
         try:
-            await asyncio.gather(*[task.run() for task in self.nodes.values()])
+            await asyncio.gather(*[node.run() for node in self.nodes.values()])
         except Exception as exc:
             exc.add_note(f"Dag was failed due to {exc}")
         finally:
             self.save()
 
     def save(self):
+        OmegaConf.save(self.to_config(), "cfg.yaml")
         self.storage.save()
 
     def get_available_nodes(self, node_name: str) -> list[str] | None:

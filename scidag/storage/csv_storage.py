@@ -1,25 +1,31 @@
 import asyncio
 from typing import Any
-
-# try:
+import numpy as np
 import pandas as pd
 
 from scidag.storage.base import Storage
 
-# except ImportError:
-# raise ModuleNotFoundError(f"Dask not found try to install scidag[dask]")
-
 
 class CSVStorage(Storage):
-    def __init__(self) -> None:
-        self.df = pd.DataFrame(columns=["target", "variable", "source", "value"])
+    def __init__(self, data: pd.DataFrame | None = None) -> None:
+        self._df = (
+            data
+            if data is not None
+            else pd.DataFrame(columns=["target", "variable", "source", "value"])
+        )
+
+    @classmethod
+    def from_config(cls, cfg) -> "CSVStorage":
+        data = build_csv_data(cfg)
+        return cls(data=data)
 
     def store(self, source: str, value: Any) -> None:
-        self.df.loc[self.df.source == source, "value"] = value
+        self._df.loc[self._df["source"] == source, "value"] = value
 
     async def get(self, target: str) -> Any:
+        # TODO: cycle only if diff in the target
         while True:
-            df = self.df[self.df["target"] == target]
+            df = self._df[self._df["target"] == target]
             if df["value"].isnull().sum() == 0:
                 ret = {
                     row["variable"]: row["value"]
@@ -29,7 +35,7 @@ class CSVStorage(Storage):
                 return ret
 
             # Wait for a short time before checking again
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.1)
 
     def add_dependency(
         self,
@@ -43,22 +49,37 @@ class CSVStorage(Storage):
                     "target": target,
                     "variable": variable,
                     "source": source,
-                    "value": None,
+                    "value": np.NaN,
                 }
             ]
         )
-        df = pd.concat([self.df, row])
-        self.df = df.reset_index(drop=True)
+        df = pd.concat([self._df, row])
+        self._df = df.reset_index(drop=True)
 
     def remove_dependency(self, target: str, variable: str, source: str) -> None:
-        df = self.df
+        df = self._df
         index = df[
             (df.source == source) & (df.target == target) & (df.variable == variable)
         ].index[0]
-        self.df = df.drop(index=index)
+        self._df = df.drop(index=index)
 
     def save(self):
-        self.df.to_csv("storage.csv")
+        self._df.to_csv("storage.csv")
+
+    def show(self) -> Any:
+        return self._df.head()
+
+
+def build_csv_data(cfg) -> pd.DataFrame:
+    df = pd.DataFrame(columns=["target", "variable", "source", "value"])
+    for name, node in cfg.dag.items():
+        for edge in node.edges:
+            tgt, vr = edge.split(".")
+            row = pd.DataFrame(
+                [{"target": tgt, "variable": vr, "source": name, "value": None}]
+            )
+            df = pd.concat([df, row], ignore_index=True)
+    return df
 
 
 async def task_a(storage: Storage):
@@ -113,7 +134,7 @@ if __name__ == "__main__":
     storage.add_dependency("D", "d3", "C")
     storage.add_dependency("E", "e", "D")
     storage.add_dependency("X", "X", "X")
-    print(storage.df.head(10))
+    print(storage)
     storage.remove_dependency("X", "X", "X")
     asyncio.run(main(storage))
-    print(storage.df.head(6))
+    print(storage._df.head())

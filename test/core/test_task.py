@@ -1,4 +1,4 @@
-from scidag.core.node import Node
+from scidag.core.node.node import Node
 
 
 def test_task_run():
