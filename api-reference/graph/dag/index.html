@@ -13,13 +13,17 @@
         <link rel="canonical" href="https://michaelcurrin.github.io/api-reference/graph/dag/">
       
       
+        <link rel="prev" href="../base-graph/">
+      
+      
+        <link rel="next" href="../../node/base-node/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.15">
     
     
       
-        <title>Dag - sciDAG</title>
+        <title>DAG - sciDAG</title>
       
     
     
@@ -112,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dag
+              DAG
             
           </span>
         </div>
@@ -442,14 +446,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
       
       
       
@@ -458,7 +464,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           Reference API
@@ -469,14 +475,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
       
       
       
@@ -485,7 +493,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_1">
           <span class="md-nav__icon md-icon"></span>
           Graph
@@ -510,11 +518,143 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../dag.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          DAG
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         DAG
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG" class="md-nav__link">
+    DAG
+  </a>
+  
+    <nav class="md-nav" aria-label="DAG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG-methods" class="md-nav__link">
+    Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.add" class="md-nav__link">
+    add()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.connect" class="md-nav__link">
+    connect()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.disconnect" class="md-nav__link">
+    disconnect()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.from_config" class="md-nav__link">
+    from_config()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.get_available_nodes" class="md-nav__link">
+    get_available_nodes()
+  </a>
+  
+    <nav class="md-nav" aria-label="get_available_nodes()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.get_available_nodes--returns" class="md-nav__link">
+    Returns
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.get_node" class="md-nav__link">
+    get_node()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.remove" class="md-nav__link">
+    remove()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.run" class="md-nav__link">
+    run()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.save" class="md-nav__link">
+    save()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -664,6 +804,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.add" class="md-nav__link">
+    add()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.connect" class="md-nav__link">
+    connect()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.disconnect" class="md-nav__link">
+    disconnect()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#scidag.core.graph.dag.DAG.from_config" class="md-nav__link">
     from_config()
   </a>
@@ -671,8 +832,49 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.get_available_nodes" class="md-nav__link">
+    get_available_nodes()
+  </a>
+  
+    <nav class="md-nav" aria-label="get_available_nodes()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.get_available_nodes--returns" class="md-nav__link">
+    Returns
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.get_node" class="md-nav__link">
+    get_node()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.remove" class="md-nav__link">
+    remove()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#scidag.core.graph.dag.DAG.run" class="md-nav__link">
     run()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scidag.core.graph.dag.DAG.save" class="md-nav__link">
+    save()
   </a>
   
 </li>
@@ -705,7 +907,7 @@
   
 
 
-  <h1>Dag</h1>
+  <h1>DAG</h1>
 
 <div class="doc doc-object doc-class">
 
@@ -735,7 +937,70 @@ scidag.core.graph.dag.DAG            (<span title="scidag.core.base.AGraph">AGra
 
 
 
+
+
 <h3 id="scidag.core.graph.dag.DAG-methods">Methods<a href="#scidag.core.graph.dag.DAG-methods" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="scidag.core.graph.dag.DAG.add" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">ANode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+
+<a href="#scidag.core.graph.dag.DAG.add" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Add :class:<code>scidag.Node</code> to pool of nodes</p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="scidag.core.graph.dag.DAG.connect" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+
+<a href="#scidag.core.graph.dag.DAG.connect" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Add edge between two nodes</p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="scidag.core.graph.dag.DAG.disconnect" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+
+<a href="#scidag.core.graph.dag.DAG.disconnect" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Remove edge between two nodes</p>
+
+    </div>
+
+  </div>
+
 
 
   <div class="doc doc-object doc-method">
@@ -765,6 +1030,70 @@ scidag.core.graph.dag.DAG            (<span title="scidag.core.base.AGraph">AGra
 
 
 
+<h4 id="scidag.core.graph.dag.DAG.get_available_nodes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_available_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+
+<a href="#scidag.core.graph.dag.DAG.get_available_nodes" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Shows available tasks to add after this task</p>
+<h6 id="scidag.core.graph.dag.DAG.get_available_nodes--returns">Returns<a class="headerlink" href="#scidag.core.graph.dag.DAG.get_available_nodes--returns" title="Permanent link">&para;</a></h6>
+<p>list[str] | None
+    Available tasks after this task</p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="scidag.core.graph.dag.DAG.get_node" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ANode</span></code>
+
+
+<a href="#scidag.core.graph.dag.DAG.get_node" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Get :class:<code>scidag.Node</code> by its name</p>
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="scidag.core.graph.dag.DAG.remove" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">ANode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+
+<a href="#scidag.core.graph.dag.DAG.remove" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Remove :class:<code>scidag.Node</code> from this dag</p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
 <h4 id="scidag.core.graph.dag.DAG.run" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
@@ -777,6 +1106,26 @@ scidag.core.graph.dag.DAG            (<span title="scidag.core.base.AGraph">AGra
     <div class="doc doc-contents ">
 
       <p>Gets inputs from storage runs function and put outputs to storage</p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="scidag.core.graph.dag.DAG.save" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+
+<a href="#scidag.core.graph.dag.DAG.save" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Save Current run</p>
 
     </div>
 
