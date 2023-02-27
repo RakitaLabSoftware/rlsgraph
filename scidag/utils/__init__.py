@@ -1,1 +1,1 @@
-from .algo import topological_sort
+from ..algos.algo import topological_sort

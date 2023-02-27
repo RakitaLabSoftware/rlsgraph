@@ -1,4 +1,4 @@
-::: scidag.core.dag.DAG
+::: scidag.core.graph.dag.DAG
     options:
         show_source: false
         show_category_heading: true

@@ -1,7 +1,8 @@
+from typing import Type
+
 from scidag.storage.base import Storage
 from scidag.storage.csv_storage import CSVStorage
 from scidag.storage.db_storage import DBStorage
-from typing import Type
 
 
 def build_storage(cfg) -> Storage:

@@ -1,6 +1,7 @@
 import asyncio
+import os
 from typing import Any
-import numpy as np
+
 import pandas as pd
 
 from scidag.storage.base import Storage
@@ -26,7 +27,7 @@ class CSVStorage(Storage):
         # TODO: cycle only if diff in the target
         while True:
             df = self._df[self._df["target"] == target]
-            if df["value"].isnull().sum() == 0:
+            if df["value"].notna().all():
                 ret = {
                     row["variable"]: row["value"]
                     for row in df[["variable", "value"]].to_dict("records")
@@ -35,7 +36,7 @@ class CSVStorage(Storage):
                 return ret
 
             # Wait for a short time before checking again
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(1)
 
     def add_dependency(
         self,
@@ -49,7 +50,7 @@ class CSVStorage(Storage):
                     "target": target,
                     "variable": variable,
                     "source": source,
-                    "value": np.NaN,
+                    "value": None,
                 }
             ]
         )
@@ -63,8 +64,9 @@ class CSVStorage(Storage):
         ].index[0]
         self._df = df.drop(index=index)
 
-    def save(self):
-        self._df.to_csv("storage.csv")
+    def save(self, path_dir: str | None = None):
+        save_path = path_dir if path_dir is not None else "./"
+        self._df.to_csv(os.path.join(save_path, "storage.csv"))
 
     def show(self) -> Any:
         return self._df.head()

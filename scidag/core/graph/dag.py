@@ -1,12 +1,13 @@
 import asyncio
+import os
+from datetime import datetime
 from typing import Any
 
-import nest_asyncio
 import uvloop
 from omegaconf import OmegaConf
 
-from scidag.core.node import build_node
 from scidag.core.base import AGraph, ANode
+from scidag.core.node.build import build_node
 from scidag.storage import Storage, build_storage
 from scidag.storage.csv_storage import CSVStorage
 from scidag.utils.configurable import DagConfig, make_dag_config
@@ -96,15 +97,19 @@ class DAG(AGraph):
         target_node = self.get_node(target)
 
         if target_node.inputs is None:
-            raise KeyError
+            raise KeyError(f"{target_node} have no inputs")
 
-        in_type = target_node.inputs[variable].type
+        try:
+            in_type = target_node.inputs[variable].type
+        except KeyError as e:
+            e.add_note(f"There is no {variable=} in target node")
+            raise e
+
         out_type = source_node.outputs.type
-
-        if out_type != in_type:
-            raise TypeError(
-                f"Node with outputs of type:{out_type} can't be connected to {in_type}"
-            )
+        # if out_type is not in_type:
+        #     raise TypeError(
+        #         f"Node with outputs of type = {out_type} can't be connected to {in_type}"
+        #     )
 
         # add edge to graph
         self.edges[source].append(target + "." + variable)
@@ -124,6 +129,10 @@ class DAG(AGraph):
         asyncio.run(self.run())
 
     def nb_run(self) -> None:
+        try:
+            import nest_asyncio
+        except Exception:
+            raise
         nest_asyncio.apply()
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.run())
@@ -133,12 +142,17 @@ class DAG(AGraph):
             await asyncio.gather(*[node.run() for node in self.nodes.values()])
         except Exception as exc:
             exc.add_note(f"Dag was failed due to {exc}")
+            raise
         finally:
             self.save()
 
-    def save(self):
-        OmegaConf.save(self.to_config(), "cfg.yaml")
-        self.storage.save()
+    def save(self) -> None:
+        dtm = datetime.now().strftime("%d-%m-%Y_%H-%M")
+        path_dir = os.path.join("configs", str(dtm))
+        if not os.path.isdir(path_dir):
+            os.makedirs(path_dir)
+        OmegaConf.save(self.to_config(), os.path.join(path_dir, "config.yaml"))
+        self.storage.save(path_dir)
 
     def get_available_nodes(self, node_name: str) -> list[str] | None:
         # Find things in StorageGraph that

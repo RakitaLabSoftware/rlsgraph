@@ -23,25 +23,32 @@ Please also read the full [tutorial](tutorials/basic/your_first_app/1_simple_cli
 
 ### Installation
 
-* Using PIP:
+#### Using PIP:
 
 ```bash
 pip install scidag
 ```
 
-* Using Poetry:
+[How to install pip](https://pip.pypa.io/en/stable/installation/)
+
+#### Using Poetry:
 
 ```bash
 poetry add scidag
 ```
 
-* From source
+[How to install poetry](https://python-poetry.org/docs/#installation)
+
+#### From source
 
 ```bash
 git clone https://github.com/RakitaLabSoftware/scidag.git scidag
 cd scidag 
 poetry install 
 ```
+
+*Additional information about installation could be found [here](user-guide/installation.md).*
+
 
 ### Basic Usage
 
@@ -84,8 +91,6 @@ dag:
         value: None
 ```
 
-For more detailed overview for how config works presented [here](https://github.com/RakitaLabSoftware/scidag/tree/main/examples).
-
 #### Application
 
 ```python
@@ -95,7 +100,8 @@ cfg = cd.load_config("/path/to/config.yaml")
 dag = sd.DAG.from_config(cfg)
 dag.run()
 ```
+For more detailed overview please see [user guide](/user-guide/index.md).
 
 ### Other
 
-More detailed examples could be found [here](https://github.com/RakitaLabSoftware/scidag/tree/main/examples).
+Reference API could be found [here](/docs/api-reference/)

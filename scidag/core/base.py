@@ -1,26 +1,11 @@
 import abc
+import inspect
 from dataclasses import dataclass, field
 from functools import cache
-import inspect
 from typing import Any, Self
-from scidag.core.variable import Variable
 
+from scidag.core.struct.variable import Variable
 from scidag.storage import Storage
-
-
-def build_io(obj) -> tuple[dict[str, Variable] | None, Variable]:
-    sig = inspect.signature(obj)
-    inputs = {}
-    for param_name, param in sig.parameters.items():
-        if param.default is inspect.Signature.empty:
-            param_type = (
-                param.annotation if param.annotation is not inspect._empty else None
-            )
-            inputs[param_name] = Variable(type=str(param_type))
-    output = Variable(str(sig.return_annotation))
-    if len(inputs) == 0:
-        return None, output
-    return inputs, output
 
 
 class Base(abc.ABC):

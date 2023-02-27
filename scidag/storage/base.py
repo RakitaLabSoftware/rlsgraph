@@ -40,7 +40,7 @@ class Storage(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def save(self) -> None:
+    def save(self, path: str | None = None) -> None:
         pass
 
     @abc.abstractmethod

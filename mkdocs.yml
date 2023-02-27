@@ -11,6 +11,7 @@ edit_uri: edit/master/docs/docs
 
 theme:
   name: material
+  highlightjs: true
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -30,8 +31,11 @@ theme:
 
 plugins:
   - search
-  - mkdocstrings
+  - simple
+  - mkdocstrings:
+      default_handler: python
   - mermaid2
+  - mknotebooks
 
 markdown_extensions:
   - abbr
@@ -70,11 +74,21 @@ markdown_extensions:
 nav:
   - Home: index.md
   - User Guide:
+      - Index: user-guide/index.md
       - Installation: user-guide/installation.md
       - Tutorials:
           - From Scratch: user-guide/tutorials/create-dag-from-scratch.md
           - From Config: user-guide/tutorials/create-dag-from-config.md
           - Merge DAGs: user-guide/tutorials/merging-multiple-dags.md
+      - Examples:
+          - Python Math: user-guide/examples/math.ipynb
+          - Numpy: user-guide/examples/numpy.ipynb
   - Reference API:
-      - DAG: api-reference/dag.md
-      - Node: api-reference/node.md
+      - Graph:
+          - BaseGraph: api-reference/graph/base-graph.md
+          - DAG: api-reference/dag.md
+      - Node:
+          - BaseNode: api-reference/node/base-node.md
+          - Node: api-reference/node/node.md
+          - StartNode: api-reference/node/start-node.md
+          - EndNode: api-reference/node/end-node.md
