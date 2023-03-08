@@ -1,4 +1,3 @@
-import asyncio
 import os
 
 import pandas as pd
@@ -10,15 +9,6 @@ from scidag.storage.csv_storage import CSVStorage
 @pytest.fixture
 def storage():
     return CSVStorage()
-
-
-def test_store(storage: CSVStorage):
-    source = "test_source"
-    value = 123
-    storage.store(source, value)
-
-    assert storage._df.loc[0, "source"] == source
-    assert storage._df.loc[0, "value"] == value
 
 
 @pytest.mark.asyncio

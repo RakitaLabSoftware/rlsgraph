@@ -1,0 +1,46 @@
+info: {}
+dag:
+  node_a:
+    name: node_a
+    content:
+      _target_: random.random
+      _partial_: true
+    variables: null
+    edges:
+    - node_b.x
+    - node_c.x
+  node_b:
+    name: node_b
+    content:
+      _target_: __main__.tan
+      _partial_: true
+    variables:
+      x:
+        type: None
+        value: 0.4532036765101598
+    edges:
+    - node_d.x
+  node_c:
+    name: node_c
+    content:
+      _target_: __main__.cos
+      _partial_: true
+    variables:
+      x:
+        type: None
+        value: 0.4532036765101598
+    edges:
+    - node_d.y
+  node_d:
+    name: node_d
+    content:
+      _target_: __main__.my_sum
+      _partial_: true
+    variables:
+      x:
+        type: None
+        value: 0.48701243281128714
+      'y':
+        type: None
+        value: 0.8990489949870966
+    edges: []

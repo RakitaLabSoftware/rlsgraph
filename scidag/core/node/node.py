@@ -23,5 +23,5 @@ class Node(BaseNode):
             outputs = self.content(**inputs)
             self.storage.store(self.name, outputs)
         except Exception:
-            print(f"failed in self.name")
+            print(f"failed in {self.name}")
             raise

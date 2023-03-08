@@ -14,6 +14,7 @@ class CSVStorage(Storage):
             if data is not None
             else pd.DataFrame(columns=["target", "variable", "source", "value"])
         )
+        self._df["value"] = self._df["value"].astype(object)
 
     @classmethod
     def from_config(cls, cfg) -> "CSVStorage":
@@ -21,7 +22,9 @@ class CSVStorage(Storage):
         return cls(data=data)
 
     def store(self, source: str, value: Any) -> None:
-        self._df.loc[self._df["source"] == source, "value"] = value
+        self._df.loc[self._df["source"] == source, "value"] = self._df.loc[
+            self._df["source"] == source, "value"
+        ].apply(lambda x: value)
 
     async def get(self, target: str) -> Any:
         # TODO: cycle only if diff in the target

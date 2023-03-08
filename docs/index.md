@@ -1,50 +1,26 @@
----
-sidebar_position: 1
-id: intro
-title: Getting started
-sidebar_label: Getting started
----
+# Introduction
+The motivation behind creating this library is to provide a flexible and scalable way to manage Directed Acyclic Graphs (DAGs) in Python. DAGs are widely used in scientific and machine learning workflows for tasks such as data cleaning, feature engineering, model training, and inference.
 
-## Introduction
+However, managing a complex DAG can quickly become a daunting task as the number of nodes and their dependencies grow. This library aims to simplify the management of DAGs by providing a high-level API for building, connecting, and running nodes in a DAG. It also provides a configurable storage system that allows users to persist the DAG and its dependencies across multiple runs.
 
-Bla bla bla
+Moreover, this library is designed to be flexible and extensible, allowing users to define their own custom nodes and storage systems. It is built on top of asyncio, enabling asynchronous execution of nodes in the DAG, which can significantly speed up the execution of complex DAGs.
 
-### Key features
+Overall, this library aims to provide a robust and scalable solution for managing DAGs in Python, making it easier for scientists and machine learning engineers to build and manage complex workflows.
+
+## Key features
 
 * Easy to run and configure
-* configs are self explanatory and you don't need anything except one .yaml file.
-* This library is distributed with minimal dependencies
+* Сonfigs are self explanatory and you don't need anything except one .yaml file.
+* SciDAG is distributed with minimal dependencies
 
 ## Quick start guide
 
-This guide will show you some of the most important features you get by writing your application as a Hydra app.
-If you only want to use Hydra for config composition, check out Hydra's [compose API](advanced/compose_api.md) for an alternative.
-Please also read the full [tutorial](tutorials/basic/your_first_app/1_simple_cli.md) to gain a deeper understanding.
+This guide highlights some of the most crucial features that users can leverage. For a more detailed understanding, please refer to the more comprehensive [user guide](/docs/user-guide/index.md). Additionally, you cold check out th the SciDAG [API reference](/docs/api-reference). By utilizing SciDAG, users can streamline their application development process and build efficient, reliable, and scalable applications. Comprehensive documentation is provided to facilitate the integration of SciDAG into your project, and to ensure that users can fully leverage the features offered by the library.
 
 ### Installation
 
-#### Using PIP:
-
 ```bash
 pip install scidag
-```
-
-[How to install pip](https://pip.pypa.io/en/stable/installation/)
-
-#### Using Poetry:
-
-```bash
-poetry add scidag
-```
-
-[How to install poetry](https://python-poetry.org/docs/#installation)
-
-#### From source
-
-```bash
-git clone https://github.com/RakitaLabSoftware/scidag.git scidag
-cd scidag 
-poetry install 
 ```
 
 *Additional information about installation could be found [here](user-guide/installation.md).*
@@ -55,40 +31,51 @@ poetry install
 #### Config
 
 ```yaml
-info: "
-here should be your metadata
-"
+info: ''
 dag:
   node_a:
+    name: node_a
     content:
-      _target_: fn_name_a
+      _target_: func_a
       _partial_: true
-      start: 10
-      finish: 30 
+    variables: null
     edges:
-      - node_b.b1
-      - node_b.b2
+    - node_b.x
+    - node_c.x
   node_b:
+    name: node_b
     content:
-      _target_: fn_name_b
+      _target_: func_b
       _partial_: true
-    vars:
-      b1: 
-        type: int
-        value: None
-      b2:
-        type: int
-        value: None
+    variables:
+      x:
+        type: None
+        value: 0.5787140071322371
     edges:
-      - node_c.c
+    - node_d.x
   node_c:
+    name: node_c
     content:
-      _target_: fn_name_c
+      _target_: func_c
       _partial_: true
-    vars:
-      c:
-        type: int
-        value: None
+    variables:
+      x:
+        type: None
+        value: 0.5787140071322371
+    edges:
+    - node_d.y
+  node_d:
+    name: node_d
+    content:
+      _target_: func_d
+      _partial_: true
+    variables:
+      x:
+        type: None
+        value: 0.6533319952665975
+      y:
+        type: None
+        value: 0.8371667129334884
 ```
 
 #### Application
@@ -100,8 +87,4 @@ cfg = cd.load_config("/path/to/config.yaml")
 dag = sd.DAG.from_config(cfg)
 dag.run()
 ```
-For more detailed overview please see [user guide](/user-guide/index.md).
-
-### Other
-
-Reference API could be found [here](/docs/api-reference/)
+*For more detailed overview please see [user guide](/user-guide/index.md).*

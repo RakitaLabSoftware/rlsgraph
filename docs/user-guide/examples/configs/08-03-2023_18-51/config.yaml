@@ -1,0 +1,62 @@
+info: {}
+dag:
+  node_a:
+    name: node_a
+    content:
+      _target_: __main__.make_data
+      _partial_: true
+    variables: null
+    edges:
+    - node_b.x
+    - node_c.x
+  node_b:
+    name: node_b
+    content:
+      _target_: __main__.tan
+      _partial_: true
+    variables:
+      x:
+        type: None
+        value:
+        - - 2
+          - 2
+        - - 2
+          - 2
+    edges:
+    - node_d.a
+  node_c:
+    name: node_c
+    content:
+      _target_: __main__.cos
+      _partial_: true
+    variables:
+      x:
+        type: None
+        value:
+        - - 2
+          - 2
+        - - 2
+          - 2
+    edges:
+    - node_d.b
+  node_d:
+    name: node_d
+    content:
+      _target_: __main__.pow
+      _partial_: true
+    variables:
+      a:
+        type: None
+        value:
+        - - 4
+          - 4
+        - - 4
+          - 4
+      b:
+        type: None
+        value:
+        - - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+    edges: []

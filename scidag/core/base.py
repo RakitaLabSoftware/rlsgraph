@@ -17,6 +17,16 @@ class Base(abc.ABC):
         Gets inputs from storage runs function and put outputs to storage
         """
 
+
+class Configurable(abc.ABC):
+    storage: Storage
+
+    @abc.abstractmethod
+    async def run(self) -> None:
+        """
+        Gets inputs from storage runs function and put outputs to storage
+        """
+
     @classmethod
     @abc.abstractmethod
     def from_config(cls, cfg: Any) -> Self:
@@ -28,13 +38,12 @@ class Base(abc.ABC):
         pass
 
 
-class ANode(Base):
+class ANode(Configurable):
     """
     Node of DAG
     """
 
     name: str
-    storage: Storage
     inputs: dict[str, Variable] | None
     outputs: Variable
 

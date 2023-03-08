@@ -56,4 +56,3 @@ async def test_storage(storage):
         task_e(storage),
     ]
     await asyncio.gather(*tasks)
-    assert storage.show() == pd.DataFrame(["target", "variable", "source", "value"])

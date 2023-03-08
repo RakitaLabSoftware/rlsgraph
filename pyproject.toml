@@ -11,6 +11,7 @@ python = "^3.11"
 hydra-zen = "^0.9.1"
 uvloop = "^0.17.0"
 pandas = "^1.5.3"
+pydantic = "^1.10.5"
 
 [tool.poetry.group.sql_db]
 optional=true
@@ -39,6 +40,13 @@ optional = true
 
 [tool.poetry.group.redis.dependencies]
 redis = "^4.5.1"
+redis-om = "^0.1.2"
+
+[tool.poetry.group.mongo]
+optional = true
+
+[tool.poetry.group.mongo.dependencies]
+motor = "^3.1.1"
 
 [tool.poetry.group.docs]
 optional=true
@@ -51,6 +59,7 @@ mknotebooks = "^0.7.1"
 pytkdocs = "^0.16.1"
 mkdocs-simple-plugin = "^2.3.0"
 mkdocstrings-python-legacy = "^0.2.3"
+
 
 [build-system]
 requires = ["poetry-core"]

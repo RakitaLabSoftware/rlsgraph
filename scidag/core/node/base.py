@@ -1,6 +1,5 @@
 import abc
-import inspect
-from typing import Any, Callable, Self
+from typing import Self
 
 import hydra_zen as hz
 
@@ -9,6 +8,8 @@ from scidag.core.struct.variable import build_io
 from scidag.storage import Storage
 from scidag.utils.configurable import NodeConfig, make_node_config
 from scidag.utils.types import AnyCallable
+
+from scidag.utils.configurable import NodeConfig
 
 
 class BaseNode(ANode):

@@ -2,13 +2,14 @@ from dataclasses import dataclass, field
 from typing import Any, Optional
 
 import hydra_zen as hz
-from omegaconf import OmegaConf
+import numpy as np
+from omegaconf import ListConfig, OmegaConf
 
 
 @dataclass(slots=True)
 class VariableConfig:
     type: str
-    value: Optional[Any] = None
+    value: Any | None = None
 
 
 def make_variables_config(
@@ -18,7 +19,10 @@ def make_variables_config(
         return None
     variable_dict = {}
     for name, variable in variables.items():
-        variable_dict[name] = VariableConfig(variable.type, variable.value)
+        value = variable.value
+        if isinstance(value, np.ndarray):
+            value = ListConfig(value.tolist())
+        variable_dict[name] = VariableConfig(variable.type, value)
     return variable_dict
 
 
@@ -47,8 +51,10 @@ def make_node_config(node) -> NodeConfig:
 
 def make_dag_config(obj) -> DagConfig:
     cfg = DagConfig(info="")
-    for node_name, node in obj.nodes.items():
+    cfg.info = obj.meta
+    # FIXME: Bad naming for node pairs
+    for node_name, node in obj.nodes.nodes.items():
         node_cfg = make_node_config(node)
-        node_cfg.edges = obj.edges[node_name]
+        node_cfg.edges = obj.all_edges[node_name]
         cfg.dag[node_name] = node_cfg
     return cfg

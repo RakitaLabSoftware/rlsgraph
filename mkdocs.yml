@@ -79,14 +79,13 @@ nav:
       - Tutorials:
           - From Scratch: user-guide/tutorials/create-dag-from-scratch.md
           - From Config: user-guide/tutorials/create-dag-from-config.md
-          - Merge DAGs: user-guide/tutorials/merging-multiple-dags.md
       - Examples:
           - Python Math: user-guide/examples/math.ipynb
           - Numpy: user-guide/examples/numpy.ipynb
   - Reference API:
       - Graph:
           - BaseGraph: api-reference/graph/base-graph.md
-          - DAG: api-reference/dag.md
+          - DAG: api-reference/graph/dag.md
       - Node:
           - BaseNode: api-reference/node/base-node.md
           - Node: api-reference/node/node.md
