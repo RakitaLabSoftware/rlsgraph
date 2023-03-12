@@ -3,7 +3,7 @@ dag:
   node_a:
     name: node_a
     content:
-      _target_: __main__.make_data
+      _target_: random.random
       _partial_: true
     variables: null
     edges:
@@ -17,46 +17,33 @@ dag:
     variables:
       x:
         type: None
-        value:
-        - - 2
-          - 2
-        - - 2
-          - 2
+        value: 0.6448728169288591
     edges:
-    - node_d.a
+    - node_d.x
   node_c:
     name: node_c
     content:
-      _target_: __main__.cos
+      _target_: __main__.my_pow
+      _partial_: true
+      dummy:
+        _target_: __main__.MyPow
+        base: 2
+    variables:
+      x:
+        type: None
+        value: 0.6448728169288591
+    edges:
+    - node_d.y
+  node_d:
+    name: node_d
+    content:
+      _target_: __main__.my_sum
       _partial_: true
     variables:
       x:
         type: None
-        value:
-        - - 2
-          - 2
-        - - 2
-          - 2
-    edges:
-    - node_d.b
-  node_d:
-    name: node_d
-    content:
-      _target_: __main__.pow
-      _partial_: true
-    variables:
-      a:
+        value: 0.7521455025599701
+      'y':
         type: None
-        value:
-        - - 4
-          - 4
-        - - 4
-          - 4
-      b:
-        type: None
-        value:
-        - - 1.0
-          - 1.0
-        - - 1.0
-          - 1.0
+        value: 0.41586095001376183
     edges: []

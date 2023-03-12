@@ -1,5 +1,0 @@
-,target,variable,source,value
-0,node_b,x,node_a,
-1,node_c,x,node_a,
-2,node_d,x,node_b,
-3,node_d,y,node_c,

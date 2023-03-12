@@ -5,6 +5,8 @@ import hydra_zen as hz
 import numpy as np
 from omegaconf import ListConfig, OmegaConf
 
+import inspect
+
 
 @dataclass(slots=True)
 class VariableConfig:
@@ -40,11 +42,46 @@ class DagConfig:
     dag: dict[str, NodeConfig] = field(default_factory=dict)
 
 
+def get_nested_params(obj):
+    params = {}
+    for param_name, param in inspect.signature(obj).parameters.items():
+        # FIXME rewrite
+        if (
+            param.default
+            != inspect.Parameter.empty
+            # and param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD
+        ):
+            inner_params = {}
+            for inner_param_name in list(
+                inspect.signature(param.default.__init__).parameters.keys()
+            ):
+                inner_params[inner_param_name] = getattr(
+                    param.default, inner_param_name
+                )
+            params[param_name] = OmegaConf.structured(
+                hz.builds(
+                    param.default.__class__,
+                    **inner_params,
+                    populate_full_signature=True,
+                )
+            )
+    print(obj, params)
+    return params
+
+
 def make_node_config(node) -> NodeConfig:
     name = node.name
+    params = get_nested_params(node.content)
     obj_cfg = OmegaConf.structured(
-        hz.builds(node.content, populate_full_signature=True, zen_partial=True)
+        hz.builds(
+            node.content,
+            **params,
+            populate_full_signature=True,
+            zen_partial=True,
+        )
     )
+
+    # append  to node_sig
     variables = make_variables_config(node.inputs)
     return NodeConfig(name, obj_cfg, variables)
 

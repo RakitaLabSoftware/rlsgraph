@@ -17,18 +17,22 @@ dag:
     variables:
       x:
         type: None
-        value: null
+        value: 0.9792569156984525
     edges:
     - node_d.x
   node_c:
     name: node_c
     content:
-      _target_: __main__.cos
+      _target_: __main__.my_pow
       _partial_: true
+      dummy:
+        _target_: __main__.MyPow
+        _partial_: true
+        base: 2
     variables:
       x:
         type: None
-        value: null
+        value: 0.9792569156984525
     edges:
     - node_d.y
   node_d:
