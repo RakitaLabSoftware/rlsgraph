@@ -47,9 +47,9 @@ def get_nested_params(obj):
     for param_name, param in inspect.signature(obj).parameters.items():
         # FIXME rewrite
         if (
-            param.default
-            != inspect.Parameter.empty
-            # and param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD
+            param.default != inspect.Parameter.empty
+            and inspect.isclass(param.default.__class__)
+            and not isinstance(param.default, (int, float, str, bool))
         ):
             inner_params = {}
             for inner_param_name in list(
@@ -65,7 +65,6 @@ def get_nested_params(obj):
                     populate_full_signature=True,
                 )
             )
-    print(obj, params)
     return params
 
 
