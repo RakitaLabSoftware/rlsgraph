@@ -7,6 +7,8 @@ from omegaconf import ListConfig, OmegaConf
 
 import inspect
 
+from sqlalchemy import false, true
+
 
 @dataclass(slots=True)
 class VariableConfig:
@@ -71,18 +73,21 @@ def get_nested_params(obj):
 def make_node_config(node) -> NodeConfig:
     name = node.name
     params = get_nested_params(node.content)
-    obj_cfg = OmegaConf.structured(
-        hz.builds(
+    try:
+        obj_cfg = hz.builds(
             node.content,
             **params,
             populate_full_signature=True,
             zen_partial=True,
         )
-    )
-
+    except AttributeError:
+        obj_cfg = hz.builds(
+            node.content.__class__, **params, populate_full_signature=True
+        )
+    cfg = OmegaConf.structured(obj_cfg)
     # append  to node_sig
     variables = make_variables_config(node.inputs)
-    return NodeConfig(name, obj_cfg, variables)
+    return NodeConfig(name, cfg, variables)
 
 
 def make_dag_config(obj) -> DagConfig:

@@ -63,4 +63,9 @@ class Edges:
         return result[::-1]
 
     def get_children(self, node_name: str):
-        pass
+        children = []
+        for node, neighbors in self.adjacency_list.items():
+            if node == node_name:
+                children = [n.split(".")[0] for n in neighbors]
+                break
+        return children

@@ -123,14 +123,18 @@ class DAG(AGraph):
 
     async def __call__(self, start: str | None = None) -> None:
         # TODO implement start from a specific node
-        # nodes = self.get_tasks(start)
+        tasks = self.get_tasks(start)
         try:
-            await asyncio.gather(*[node.run() for node in self.nodes.objects])
+            await asyncio.gather(*[task.run() for task in tasks])
         except Exception as exc:
             exc.add_note(f"Execution of DAG was failed due to {exc} ")
             raise
         finally:
             self.save()
+
+    def get_tasks(self, start: str | None) -> list[ANode]:
+        # FIXME get a nodes from specific start
+        return self.nodes.objects
 
     # UTILS
     def save(self) -> None:
