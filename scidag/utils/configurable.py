@@ -7,8 +7,6 @@ from omegaconf import ListConfig, OmegaConf
 
 import inspect
 
-from sqlalchemy import false, true
-
 
 @dataclass(slots=True)
 class VariableConfig:
