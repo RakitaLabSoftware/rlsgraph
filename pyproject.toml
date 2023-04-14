@@ -12,6 +12,7 @@ hydra-zen = "^0.9.1"
 uvloop = "^0.17.0"
 pandas = "^1.5.3"
 pydantic = "^1.10.5"
+joblib = "^1.2.0"
 
 [tool.poetry.group.sql_db]
 optional=true

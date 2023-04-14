@@ -1,10 +1,13 @@
 import asyncio
 import os
+import joblib
 from typing import Any
-
+import numpy as np
 import pandas as pd
 
 from scidag.storage.base import Storage
+
+supported_types = (int, str, list, tuple, dict)  # , np.ndarray)
 
 
 class CSVStorage(Storage):
@@ -22,6 +25,9 @@ class CSVStorage(Storage):
         return cls(data=data)
 
     def store(self, source: str, value: Any) -> None:
+        # TODO: Move path to init function so you could save the assets
+        if type(value) not in supported_types:
+            value = joblib.dump(value, f"{source}.{type(value).__name__}.out")
         self._df.loc[self._df["source"] == source, "value"] = self._df.loc[
             self._df["source"] == source, "value"
         ].apply(lambda x: value)
@@ -30,9 +36,15 @@ class CSVStorage(Storage):
         # TODO: cycle only if diff in the target
         while True:
             df = self._df[self._df["target"] == target]
+
+            def load_value(value: Any):
+                if type(value) in supported_types:
+                    return joblib.load(value)
+                return value
+
             if df["value"].notna().all():
                 ret = {
-                    row["variable"]: row["value"]
+                    row["variable"]: load_value(row["value"])
                     for row in df[["variable", "value"]].to_dict("records")
                 }
                 # If all values in the column are non-None, return the DataFrame
@@ -85,61 +97,3 @@ def build_csv_data(cfg) -> pd.DataFrame:
             )
             df = pd.concat([df, row], ignore_index=True)
     return df
-
-
-async def task_a(storage: Storage):
-    await asyncio.sleep(1)
-    storage.store("A", "a")
-
-
-async def task_b(storage: Storage):
-    val = await storage.get("B")
-    val = val["b"] + "b"
-    await asyncio.sleep(1)
-    storage.store("B", val)
-
-
-async def task_c(storage: Storage):
-    val = await storage.get("C")
-    val = val["c"] + "c"
-    await asyncio.sleep(1)
-    storage.store("C", val)
-
-
-async def task_d(storage: Storage):
-    values = await storage.get("D")
-    res = "d"
-    for val in values.values():
-        res += val
-    await asyncio.sleep(1)
-    storage.store("D", res)
-
-
-async def task_e(storage: Storage):
-    val = await storage.get("E")
-    await asyncio.sleep(2)
-
-
-async def main(storage):
-    await asyncio.gather(
-        task_a(storage),
-        task_b(storage),
-        task_c(storage),
-        task_d(storage),
-        task_e(storage),
-    )
-
-
-if __name__ == "__main__":
-    storage = CSVStorage()
-    storage.add_dependency("B", "b", "A")
-    storage.add_dependency("D", "d1", "A")
-    storage.add_dependency("C", "c", "B")
-    storage.add_dependency("D", "d2", "B")
-    storage.add_dependency("D", "d3", "C")
-    storage.add_dependency("E", "e", "D")
-    storage.add_dependency("X", "X", "X")
-    print(storage)
-    storage.remove_dependency("X", "X", "X")
-    asyncio.run(main(storage))
-    print(storage._df.head())
