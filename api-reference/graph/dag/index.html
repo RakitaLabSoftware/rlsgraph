@@ -587,8 +587,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#scidag.core.graph.dag.DAG.from_config" class="md-nav__link">
-    from_config()
+  <a href="#scidag.core.graph.dag.DAG.find_all_children" class="md-nav__link">
+    find_all_children()
   </a>
   
 </li>
@@ -825,8 +825,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#scidag.core.graph.dag.DAG.from_config" class="md-nav__link">
-    from_config()
+  <a href="#scidag.core.graph.dag.DAG.find_all_children" class="md-nav__link">
+    find_all_children()
   </a>
   
 </li>
@@ -963,12 +963,13 @@ scidag.core.graph.dag.DAG            (<span title="scidag.core.base.AGraph">AGra
 
 
 
+
   <div class="doc doc-object doc-method">
 
 
 
 <h4 id="scidag.core.graph.dag.DAG.connect" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+<code class="highlight language-python"><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
 
 <a href="#scidag.core.graph.dag.DAG.connect" class="headerlink" title="Permanent link">&para;</a></h4>
@@ -980,6 +981,7 @@ scidag.core.graph.dag.DAG            (<span title="scidag.core.base.AGraph">AGra
     </div>
 
   </div>
+
 
 
 
@@ -1003,26 +1005,25 @@ scidag.core.graph.dag.DAG            (<span title="scidag.core.base.AGraph">AGra
 
 
 
+
   <div class="doc doc-object doc-method">
 
 
 
-<h4 id="scidag.core.graph.dag.DAG.from_config" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">from_config</span><span class="p">(</span><span class="n">cfg</span><span class="p">:</span> <span class="n">DagConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DAG</span></code>
+<h4 id="scidag.core.graph.dag.DAG.find_all_children" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">find_all_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span></code>
 
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-classmethod"><code>classmethod</code></small>
-  </span>
 
-<a href="#scidag.core.graph.dag.DAG.from_config" class="headerlink" title="Permanent link">&para;</a></h4>
+<a href="#scidag.core.graph.dag.DAG.find_all_children" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
-      <p>Build :class:<code>Self</code> by provided config</p>
+      <p>find all children nodes to specific node</p>
 
     </div>
 
   </div>
+
 
 
 
@@ -1090,16 +1091,14 @@ scidag.core.graph.dag.DAG            (<span title="scidag.core.base.AGraph">AGra
 
 
 
+
   <div class="doc doc-object doc-method">
 
 
 
 <h4 id="scidag.core.graph.dag.DAG.run" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+<code class="highlight language-python"><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-async"><code>async</code></small>
-  </span>
 
 <a href="#scidag.core.graph.dag.DAG.run" class="headerlink" title="Permanent link">&para;</a></h4>
 

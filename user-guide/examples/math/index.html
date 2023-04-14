@@ -718,7 +718,7 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">scidag.core</span> <span class="kn">import</span> <span class="n">DAG</span><span class="p">,</span> <span class="n">StartNode</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">EndNode</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">scidag</span> <span class="kn">import</span> <span class="n">DAG</span><span class="p">,</span> <span class="n">StartNode</span><span class="p">,</span> <span class="n">Node</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">OmegaConf</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">()</span>
 </span></code></pre></div>
@@ -732,19 +732,12 @@
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="fixme-write-down-philosophy">FIXME write down philosophy<a class="headerlink" href="#fixme-write-down-philosophy" title="Permanent link">&para;</a></h1>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># FIXME </span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span> <span class="nn">random</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">import</span> <span class="nn">math</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span> <span class="nn">math</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">def</span> <span class="nf">my_sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
@@ -752,11 +745,23 @@
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span> <span class="nf">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">def</span> <span class="nf">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="k">def</span> <span class="nf">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="k">return</span> <span class="nb">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">class</span> <span class="nc">TestClass</span><span class="p">:</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="k">pass</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">def</span> <span class="nf">cos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">TestClass</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="k">class</span> <span class="nc">Default</span><span class="p">:</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">base</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="k">class</span> <span class="nc">MyPow</span><span class="p">:</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="n">Default</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">default</span><span class="o">.</span><span class="n">base</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>        <span class="k">return</span> <span class="nb">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">)</span>
 </span></code></pre></div>
 
 </div>
@@ -764,16 +769,17 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">StartNode</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">))</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="n">tan</span><span class="p">))</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="n">cos</span><span class="p">))</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EndNode</span><span class="p">(</span><span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="n">my_sum</span><span class="p">))</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># FIXME</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_b.x&quot;</span><span class="p">)</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_c.x&quot;</span><span class="p">)</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d.x&quot;</span><span class="p">)</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d.y&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">random</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">StartNode</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">))</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="n">tan</span><span class="p">))</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="n">MyPow</span><span class="p">()))</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="n">my_sum</span><span class="p">))</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># FIXME</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 
 </div>
@@ -781,18 +787,169 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># FIXME </span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">dag</span><span class="o">.</span><span class="n">to_config</span><span class="p">()</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">nb_run</span><span class="p">()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">dag</span><span class="o">.</span><span class="n">all_edges</span><span class="p">)</span>
 </span></code></pre></div>
 
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>{&#39;node_a&#39;: [&#39;node_b.x&#39;, &#39;node_c.x&#39;], &#39;node_b&#39;: [&#39;node_d.x&#39;], &#39;node_c&#39;: [&#39;node_d.y&#39;], &#39;node_d&#39;: []}
+</code>
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">dag</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># FIXME not working with instantiation</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">dag</span><span class="o">.</span><span class="n">to_config</span><span class="p">()</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+File <span class="ansi-green-fg">~/projects/scidag/scidag/utils/configurable.py:75</span>, in <span class="ansi-cyan-fg">make_node_config</span><span class="ansi-blue-fg">(node)</span>
+<span class="ansi-green-intense-fg ansi-bold">     74</span> try:
+<span class="ansi-green-fg">---&gt; 75</span>     obj_cfg = hz.builds(
+<span class="ansi-green-intense-fg ansi-bold">     76</span>         node.content,
+<span class="ansi-green-intense-fg ansi-bold">     77</span>         **params,
+<span class="ansi-green-intense-fg ansi-bold">     78</span>         populate_full_signature=True,
+<span class="ansi-green-intense-fg ansi-bold">     79</span>         zen_partial=True,
+<span class="ansi-green-intense-fg ansi-bold">     80</span>     )
+<span class="ansi-green-intense-fg ansi-bold">     81</span> except AttributeError:
+
+File <span class="ansi-green-fg">~/.cache/pypoetry/virtualenvs/scidag-ryUc_W-U-py3.11/lib/python3.11/site-packages/hydra_zen/structured_configs/_implementations.py:1563</span>, in <span class="ansi-cyan-fg">builds</span><span class="ansi-blue-fg">(***failed resolving arguments***)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1561</span> target_field: List[Union[Tuple[str, Type[Any]], Tuple[str, Type[Any], Any]]]
+<span class="ansi-green-fg">-&gt; 1563</span> target_path: Final[str] = _utils.get_obj_path(target)
+<span class="ansi-green-intense-fg ansi-bold">   1565</span> # zen_partial behavior:
+<span class="ansi-green-intense-fg ansi-bold">   1566</span> #
+<span class="ansi-green-intense-fg ansi-bold">   1567</span> # If zen_partial is not None: zen_partial dictates if output is PartialBuilds
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1575</span> #    then set _partial_=False, _zen_partial=zen_partial
+<span class="ansi-green-intense-fg ansi-bold">   1576</span> #
+
+File <span class="ansi-green-fg">~/.cache/pypoetry/virtualenvs/scidag-ryUc_W-U-py3.11/lib/python3.11/site-packages/hydra_zen/structured_configs/_utils.py:256</span>, in <span class="ansi-cyan-fg">get_obj_path</span><span class="ansi-blue-fg">(obj)</span>
+<span class="ansi-green-intense-fg ansi-bold">    255</span> if name == UNKNOWN_NAME:
+<span class="ansi-green-fg">--&gt; 256</span>     raise AttributeError(f&#34;{obj} does not have a `__name__` attribute&#34;)
+<span class="ansi-green-intense-fg ansi-bold">    258</span> module = getattr(obj, &#34;__module__&#34;, None)
+
+<span class="ansi-red-fg">AttributeError</span>: &lt;__main__.MyPow object at 0x7fefd5ff3d90&gt; does not have a `__name__` attribute
+
+During handling of the above exception, another exception occurred:
+
+<span class="ansi-red-fg">HydraZenUnsupportedPrimitiveError</span>         Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[5], line 2</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> # FIXME not working with instantiation
+<span class="ansi-green-fg">----&gt; 2</span> cfg = dag.to_config()
+<span class="ansi-green-intense-fg ansi-bold">      3</span> dag = DAG.from_config(cfg)
+<span class="ansi-green-intense-fg ansi-bold">      4</span> dag.run(&#34;node_b&#34;)
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/core/graph/dag.py:46</span>, in <span class="ansi-cyan-fg">DAG.to_config</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">     45</span> def to_config(self) -&gt; DagConfig:
+<span class="ansi-green-fg">---&gt; 46</span>     return OmegaConf.structured(make_dag_config(self))
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/utils/configurable.py:96</span>, in <span class="ansi-cyan-fg">make_dag_config</span><span class="ansi-blue-fg">(obj)</span>
+<span class="ansi-green-intense-fg ansi-bold">     94</span> # FIXME: Bad naming for node pairs
+<span class="ansi-green-intense-fg ansi-bold">     95</span> for node_name, node in obj.nodes.nodes.items():
+<span class="ansi-green-fg">---&gt; 96</span>     node_cfg = make_node_config(node)
+<span class="ansi-green-intense-fg ansi-bold">     97</span>     node_cfg.edges = obj.all_edges[node_name]
+<span class="ansi-green-intense-fg ansi-bold">     98</span>     cfg.dag[node_name] = node_cfg
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/utils/configurable.py:82</span>, in <span class="ansi-cyan-fg">make_node_config</span><span class="ansi-blue-fg">(node)</span>
+<span class="ansi-green-intense-fg ansi-bold">     75</span>     obj_cfg = hz.builds(
+<span class="ansi-green-intense-fg ansi-bold">     76</span>         node.content,
+<span class="ansi-green-intense-fg ansi-bold">     77</span>         **params,
+<span class="ansi-green-intense-fg ansi-bold">     78</span>         populate_full_signature=True,
+<span class="ansi-green-intense-fg ansi-bold">     79</span>         zen_partial=True,
+<span class="ansi-green-intense-fg ansi-bold">     80</span>     )
+<span class="ansi-green-intense-fg ansi-bold">     81</span> except AttributeError:
+<span class="ansi-green-fg">---&gt; 82</span>     obj_cfg = hz.builds(
+<span class="ansi-green-intense-fg ansi-bold">     83</span>         node.content.__class__, **params, populate_full_signature=True
+<span class="ansi-green-intense-fg ansi-bold">     84</span>     )
+<span class="ansi-green-intense-fg ansi-bold">     85</span> cfg = OmegaConf.structured(obj_cfg)
+<span class="ansi-green-intense-fg ansi-bold">     86</span> # append  to node_sig
+
+File <span class="ansi-green-fg">~/.cache/pypoetry/virtualenvs/scidag-ryUc_W-U-py3.11/lib/python3.11/site-packages/hydra_zen/structured_configs/_implementations.py:2136</span>, in <span class="ansi-cyan-fg">builds</span><span class="ansi-blue-fg">(***failed resolving arguments***)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2133</span> value = item[-1]
+<span class="ansi-green-intense-fg ansi-bold">   2135</span> if not isinstance(value, _Field):
+<span class="ansi-green-fg">-&gt; 2136</span>     _field = sanitized_field(
+<span class="ansi-green-intense-fg ansi-bold">   2137</span>         value,
+<span class="ansi-green-intense-fg ansi-bold">   2138</span>         error_prefix=BUILDS_ERROR_PREFIX,
+<span class="ansi-green-intense-fg ansi-bold">   2139</span>         field_name=item[0],
+<span class="ansi-green-intense-fg ansi-bold">   2140</span>         _mutable_default_permitted=_utils.mutable_default_permitted(
+<span class="ansi-green-intense-fg ansi-bold">   2141</span>             builds_bases, name
+<span class="ansi-green-intense-fg ansi-bold">   2142</span>         ),
+<span class="ansi-green-intense-fg ansi-bold">   2143</span>         convert_dataclass=zen_convert_settings[&#34;dataclass&#34;],
+<span class="ansi-green-intense-fg ansi-bold">   2144</span>     )
+<span class="ansi-green-intense-fg ansi-bold">   2145</span> elif (
+<span class="ansi-green-intense-fg ansi-bold">   2146</span>     PATCH_OMEGACONF_830
+<span class="ansi-green-intense-fg ansi-bold">   2147</span>     and builds_bases
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2153</span>     # Value was passed as a field-with-default-factory, we&#39;ll
+<span class="ansi-green-intense-fg ansi-bold">   2154</span>     # access the default from the factory and will reconstruct the field
+<span class="ansi-green-intense-fg ansi-bold">   2155</span>     _field = sanitized_field(
+<span class="ansi-green-intense-fg ansi-bold">   2156</span>         value.default_factory(),
+<span class="ansi-green-intense-fg ansi-bold">   2157</span>         error_prefix=BUILDS_ERROR_PREFIX,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2162</span>         convert_dataclass=zen_convert_settings[&#34;dataclass&#34;],
+<span class="ansi-green-intense-fg ansi-bold">   2163</span>     )
+
+File <span class="ansi-green-fg">~/.cache/pypoetry/virtualenvs/scidag-ryUc_W-U-py3.11/lib/python3.11/site-packages/hydra_zen/structured_configs/_implementations.py:791</span>, in <span class="ansi-cyan-fg">sanitized_field</span><span class="ansi-blue-fg">(value, init, allow_zen_conversion, error_prefix, field_name, _mutable_default_permitted, convert_dataclass)</span>
+<span class="ansi-green-intense-fg ansi-bold">    780</span> def sanitized_field(
+<span class="ansi-green-intense-fg ansi-bold">    781</span>     value: Any,
+<span class="ansi-green-intense-fg ansi-bold">    782</span>     init: bool = True,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">    788</span>     convert_dataclass: bool,
+<span class="ansi-green-intense-fg ansi-bold">    789</span> ) -&gt; Field[Any]:
+<span class="ansi-green-fg">--&gt; 791</span>     value = sanitized_default_value(
+<span class="ansi-green-intense-fg ansi-bold">    792</span>         value,
+<span class="ansi-green-intense-fg ansi-bold">    793</span>         allow_zen_conversion=allow_zen_conversion,
+<span class="ansi-green-intense-fg ansi-bold">    794</span>         error_prefix=error_prefix,
+<span class="ansi-green-intense-fg ansi-bold">    795</span>         field_name=field_name,
+<span class="ansi-green-intense-fg ansi-bold">    796</span>         convert_dataclass=convert_dataclass,
+<span class="ansi-green-intense-fg ansi-bold">    797</span>     )
+<span class="ansi-green-intense-fg ansi-bold">    799</span>     type_value = type(value)
+<span class="ansi-green-intense-fg ansi-bold">    800</span>     if (
+<span class="ansi-green-intense-fg ansi-bold">    801</span>         type_value in _utils.KNOWN_MUTABLE_TYPES
+<span class="ansi-green-intense-fg ansi-bold">    802</span>         and type_value in HYDRA_SUPPORTED_PRIMITIVES
+<span class="ansi-green-intense-fg ansi-bold">    803</span>     ) or (
+<span class="ansi-green-intense-fg ansi-bold">    804</span>         is_dataclass(value) and not isinstance(value, type) and value.__hash__ is None
+<span class="ansi-green-intense-fg ansi-bold">    805</span>     ):
+
+File <span class="ansi-green-fg">~/.cache/pypoetry/virtualenvs/scidag-ryUc_W-U-py3.11/lib/python3.11/site-packages/hydra_zen/structured_configs/_implementations.py:743</span>, in <span class="ansi-cyan-fg">sanitized_default_value</span><span class="ansi-blue-fg">(value, allow_zen_conversion, error_prefix, field_name, structured_conf_permitted, convert_dataclass, hydra_recursive, hydra_convert, zen_dataclass)</span>
+<span class="ansi-green-intense-fg ansi-bold">    737</span> if structured_conf_permitted:
+<span class="ansi-green-intense-fg ansi-bold">    738</span>     err_msg += (
+<span class="ansi-green-intense-fg ansi-bold">    739</span>         f&#34;\n\nConsider using `hydra_zen.builds({type(value)}, ...)` create &#34;
+<span class="ansi-green-intense-fg ansi-bold">    740</span>         &#34;a config for this particular value.&#34;
+<span class="ansi-green-intense-fg ansi-bold">    741</span>     )
+<span class="ansi-green-fg">--&gt; 743</span> raise HydraZenUnsupportedPrimitiveError(err_msg)
+
+<span class="ansi-red-fg">HydraZenUnsupportedPrimitiveError</span>: Building: MyPow ..
+ The configured value &lt;__main__.Default object at 0x7fefd383f0d0&gt;, for field `default`, is not supported by Hydra -- serializing or instantiating this config would ultimately result in an error.
+
+Consider using `hydra_zen.builds(&lt;class &#39;__main__.Default&#39;&gt;, ...)` create a config for this particular value.</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">dag</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </span></code></pre></div>
 
 </div>
@@ -830,28 +987,28 @@
       <td>node_b</td>
       <td>x</td>
       <td>node_a</td>
-      <td>0.578714</td>
+      <td>0.610939</td>
     </tr>
     <tr>
       <th>1</th>
       <td>node_c</td>
       <td>x</td>
       <td>node_a</td>
-      <td>0.578714</td>
+      <td>0.610939</td>
     </tr>
     <tr>
       <th>2</th>
       <td>node_d</td>
       <td>x</td>
       <td>node_b</td>
-      <td>0.653332</td>
+      <td>0.700318</td>
     </tr>
     <tr>
       <th>3</th>
       <td>node_d</td>
       <td>y</td>
       <td>node_c</td>
-      <td>0.837167</td>
+      <td>0.373247</td>
     </tr>
   </tbody>
 </table>
@@ -864,7 +1021,7 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">OmegaConf</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="n">dag</span><span class="o">.</span><span class="n">to_config</span><span class="p">()))</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">OmegaConf</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="n">dag</span><span class="o">.</span><span class="n">to_config</span><span class="p">()))</span>
 </span></code></pre></div>
 
 </div>
@@ -873,7 +1030,7 @@
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>info: &#39;&#39;
+<code>info: {}
 dag:
   node_a:
     name: node_a
@@ -892,18 +1049,18 @@ dag:
     variables:
       x:
         type: None
-        value: 0.5787140071322371
+        value: 0.6109392441504008
     edges:
     - node_d.x
   node_c:
     name: node_c
     content:
-      _target_: __main__.cos
-      _partial_: true
+      _target_: __main__.MyPow
+      base: 2
     variables:
       x:
         type: None
-        value: 0.5787140071322371
+        value: 0.6109392441504008
     edges:
     - node_d.y
   node_d:
@@ -914,10 +1071,10 @@ dag:
     variables:
       x:
         type: None
-        value: 0.6533319952665975
+        value: 0.7003178343003321
       &#39;y&#39;:
         type: None
-        value: 0.8371667129334884
+        value: 0.373246760043063
     edges: []
 
 </code>

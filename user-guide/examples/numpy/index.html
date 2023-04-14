@@ -718,7 +718,7 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">scidag.core</span> <span class="kn">import</span> <span class="n">DAG</span><span class="p">,</span> <span class="n">StartNode</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">EndNode</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">scidag</span> <span class="kn">import</span> <span class="n">DAG</span><span class="p">,</span> <span class="n">StartNode</span><span class="p">,</span> <span class="n">Node</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">OmegaConf</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">()</span>
 </span></code></pre></div>
@@ -739,7 +739,7 @@
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">def</span> <span class="nf">make_data</span><span class="p">():</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">def</span> <span class="nf">tan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
@@ -759,13 +759,13 @@
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">StartNode</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="n">make_data</span><span class="p">))</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="n">tan</span><span class="p">))</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="n">cos</span><span class="p">))</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">EndNode</span><span class="p">(</span><span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="nb">pow</span><span class="p">))</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="nb">pow</span><span class="p">))</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># FIXME</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_b.x&quot;</span><span class="p">)</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_c.x&quot;</span><span class="p">)</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d.a&quot;</span><span class="p">)</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d.b&quot;</span><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_a&quot;</span><span class="p">,</span> <span class="s2">&quot;node_c&quot;</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_b&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">dag</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;node_c&quot;</span><span class="p">,</span> <span class="s2">&quot;node_d&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 
 </div>
@@ -776,9 +776,139 @@
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># FIXME </span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">dag</span><span class="o">.</span><span class="n">to_config</span><span class="p">()</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">nb_run</span><span class="p">()</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">dag</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </span></code></pre></div>
 
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>failed in node_b
+failed in node_c
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[4], line 4</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> cfg = dag.to_config()
+<span class="ansi-green-intense-fg ansi-bold">      3</span> dag = DAG.from_config(cfg)
+<span class="ansi-green-fg">----&gt; 4</span> dag.run()
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/core/graph/dag.py:122</span>, in <span class="ansi-cyan-fg">DAG.run</span><span class="ansi-blue-fg">(self, start)</span>
+<span class="ansi-green-intense-fg ansi-bold">    120</span>     nest_asyncio.apply()
+<span class="ansi-green-intense-fg ansi-bold">    121</span> loop = asyncio.get_event_loop()
+<span class="ansi-green-fg">--&gt; 122</span> loop.run_until_complete(self(start))
+
+File <span class="ansi-green-fg">~/.cache/pypoetry/virtualenvs/scidag-ryUc_W-U-py3.11/lib/python3.11/site-packages/nest_asyncio.py:90</span>, in <span class="ansi-cyan-fg">_patch_loop.&lt;locals&gt;.run_until_complete</span><span class="ansi-blue-fg">(self, future)</span>
+<span class="ansi-green-intense-fg ansi-bold">     87</span> if not f.done():
+<span class="ansi-green-intense-fg ansi-bold">     88</span>     raise RuntimeError(
+<span class="ansi-green-intense-fg ansi-bold">     89</span>         &#39;Event loop stopped before Future completed.&#39;)
+<span class="ansi-green-fg">---&gt; 90</span> return f.result()
+
+File <span class="ansi-green-fg">~/.pyenv/versions/3.11.1/lib/python3.11/asyncio/futures.py:203</span>, in <span class="ansi-cyan-fg">Future.result</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    201</span> self.__log_traceback = False
+<span class="ansi-green-intense-fg ansi-bold">    202</span> if self._exception is not None:
+<span class="ansi-green-fg">--&gt; 203</span>     raise self._exception.with_traceback(self._exception_tb)
+<span class="ansi-green-intense-fg ansi-bold">    204</span> return self._result
+
+File <span class="ansi-green-fg">~/.pyenv/versions/3.11.1/lib/python3.11/asyncio/tasks.py:269</span>, in <span class="ansi-cyan-fg">Task.__step</span><span class="ansi-blue-fg">(***failed resolving arguments***)</span>
+<span class="ansi-green-intense-fg ansi-bold">    267</span>         result = coro.send(None)
+<span class="ansi-green-intense-fg ansi-bold">    268</span>     else:
+<span class="ansi-green-fg">--&gt; 269</span>         result = coro.throw(exc)
+<span class="ansi-green-intense-fg ansi-bold">    270</span> except StopIteration as exc:
+<span class="ansi-green-intense-fg ansi-bold">    271</span>     if self._must_cancel:
+<span class="ansi-green-intense-fg ansi-bold">    272</span>         # Task is cancelled right before coro stops.
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/core/graph/dag.py:128</span>, in <span class="ansi-cyan-fg">DAG.__call__</span><span class="ansi-blue-fg">(self, start)</span>
+<span class="ansi-green-intense-fg ansi-bold">    126</span> tasks = self.get_tasks(start)
+<span class="ansi-green-intense-fg ansi-bold">    127</span> try:
+<span class="ansi-green-fg">--&gt; 128</span>     await asyncio.gather(*[task.run() for task in tasks])
+<span class="ansi-green-intense-fg ansi-bold">    129</span> except Exception as exc:
+<span class="ansi-green-intense-fg ansi-bold">    130</span>     exc.add_note(f&#34;Execution of DAG was failed due to {exc} &#34;)
+
+File <span class="ansi-green-fg">~/.pyenv/versions/3.11.1/lib/python3.11/asyncio/tasks.py:339</span>, in <span class="ansi-cyan-fg">Task.__wakeup</span><span class="ansi-blue-fg">(self, future)</span>
+<span class="ansi-green-intense-fg ansi-bold">    337</span> def __wakeup(self, future):
+<span class="ansi-green-intense-fg ansi-bold">    338</span>     try:
+<span class="ansi-green-fg">--&gt; 339</span>         future.result()
+<span class="ansi-green-intense-fg ansi-bold">    340</span>     except BaseException as exc:
+<span class="ansi-green-intense-fg ansi-bold">    341</span>         # This may also be a cancellation.
+<span class="ansi-green-intense-fg ansi-bold">    342</span>         self.__step(exc)
+
+File <span class="ansi-green-fg">~/.pyenv/versions/3.11.1/lib/python3.11/asyncio/tasks.py:267</span>, in <span class="ansi-cyan-fg">Task.__step</span><span class="ansi-blue-fg">(***failed resolving arguments***)</span>
+<span class="ansi-green-intense-fg ansi-bold">    263</span> try:
+<span class="ansi-green-intense-fg ansi-bold">    264</span>     if exc is None:
+<span class="ansi-green-intense-fg ansi-bold">    265</span>         # We use the `send` method directly, because coroutines
+<span class="ansi-green-intense-fg ansi-bold">    266</span>         # don&#39;t have `__iter__` and `__next__` methods.
+<span class="ansi-green-fg">--&gt; 267</span>         result = coro.send(None)
+<span class="ansi-green-intense-fg ansi-bold">    268</span>     else:
+<span class="ansi-green-intense-fg ansi-bold">    269</span>         result = coro.throw(exc)
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/core/node/node.py:22</span>, in <span class="ansi-cyan-fg">Node.run</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">     20</span> async def run(self) -&gt; None:
+<span class="ansi-green-intense-fg ansi-bold">     21</span>     try:
+<span class="ansi-green-fg">---&gt; 22</span>         inputs = await self.get_inputs()
+<span class="ansi-green-intense-fg ansi-bold">     23</span>         outputs = self.content(**inputs)
+<span class="ansi-green-intense-fg ansi-bold">     24</span>         self.storage.store(self.name, outputs)
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/core/node/base.py:64</span>, in <span class="ansi-cyan-fg">BaseNode.get_inputs</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">     57</span> async def get_inputs(self):
+<span class="ansi-green-intense-fg ansi-bold">     58</span>     &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">     59</span>     Retrieves inputs for the current node from storage.
+<span class="ansi-green-intense-fg ansi-bold">     60</span> 
+<span class="ansi-green-intense-fg ansi-bold">     61</span>     Returns:
+<span class="ansi-green-intense-fg ansi-bold">     62</span>         dict: A dictionary containing the inputs for the current node.
+<span class="ansi-green-intense-fg ansi-bold">     63</span>     &#34;&#34;&#34;
+<span class="ansi-green-fg">---&gt; 64</span>     res = await self.storage.get(self.name)
+<span class="ansi-green-intense-fg ansi-bold">     65</span>     if self.inputs is not None:
+<span class="ansi-green-intense-fg ansi-bold">     66</span>         for name in self.inputs.keys():
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/storage/csv_storage.py:46</span>, in <span class="ansi-cyan-fg">CSVStorage.get</span><span class="ansi-blue-fg">(self, target)</span>
+<span class="ansi-green-intense-fg ansi-bold">     43</span>     return value
+<span class="ansi-green-intense-fg ansi-bold">     45</span> if df[&#34;value&#34;].notna().all():
+<span class="ansi-green-fg">---&gt; 46</span>     ret = {
+<span class="ansi-green-intense-fg ansi-bold">     47</span>         row[&#34;variable&#34;]: load_value(row[&#34;value&#34;])
+<span class="ansi-green-intense-fg ansi-bold">     48</span>         for row in df[[&#34;variable&#34;, &#34;value&#34;]].to_dict(&#34;records&#34;)
+<span class="ansi-green-intense-fg ansi-bold">     49</span>     }
+<span class="ansi-green-intense-fg ansi-bold">     50</span>     # If all values in the column are non-None, return the DataFrame
+<span class="ansi-green-intense-fg ansi-bold">     51</span>     return ret
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/storage/csv_storage.py:47</span>, in <span class="ansi-cyan-fg">&lt;dictcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
+<span class="ansi-green-intense-fg ansi-bold">     43</span>     return value
+<span class="ansi-green-intense-fg ansi-bold">     45</span> if df[&#34;value&#34;].notna().all():
+<span class="ansi-green-intense-fg ansi-bold">     46</span>     ret = {
+<span class="ansi-green-fg">---&gt; 47</span>         row[&#34;variable&#34;]: load_value(row[&#34;value&#34;])
+<span class="ansi-green-intense-fg ansi-bold">     48</span>         for row in df[[&#34;variable&#34;, &#34;value&#34;]].to_dict(&#34;records&#34;)
+<span class="ansi-green-intense-fg ansi-bold">     49</span>     }
+<span class="ansi-green-intense-fg ansi-bold">     50</span>     # If all values in the column are non-None, return the DataFrame
+<span class="ansi-green-intense-fg ansi-bold">     51</span>     return ret
+
+File <span class="ansi-green-fg">~/projects/scidag/scidag/storage/csv_storage.py:42</span>, in <span class="ansi-cyan-fg">CSVStorage.get.&lt;locals&gt;.load_value</span><span class="ansi-blue-fg">(value)</span>
+<span class="ansi-green-intense-fg ansi-bold">     40</span> def load_value(value: Any):
+<span class="ansi-green-intense-fg ansi-bold">     41</span>     if type(value) in supported_types:
+<span class="ansi-green-fg">---&gt; 42</span>         return joblib.load(value)
+<span class="ansi-green-intense-fg ansi-bold">     43</span>     return value
+
+File <span class="ansi-green-fg">~/.cache/pypoetry/virtualenvs/scidag-ryUc_W-U-py3.11/lib/python3.11/site-packages/joblib/numpy_pickle.py:650</span>, in <span class="ansi-cyan-fg">load</span><span class="ansi-blue-fg">(filename, mmap_mode)</span>
+<span class="ansi-green-intense-fg ansi-bold">    648</span>         obj = _unpickle(fobj)
+<span class="ansi-green-intense-fg ansi-bold">    649</span> else:
+<span class="ansi-green-fg">--&gt; 650</span>     with open(filename, &#39;rb&#39;) as f:
+<span class="ansi-green-intense-fg ansi-bold">    651</span>         with _read_fileobject(f, filename, mmap_mode) as fobj:
+<span class="ansi-green-intense-fg ansi-bold">    652</span>             if isinstance(fobj, str):
+<span class="ansi-green-intense-fg ansi-bold">    653</span>                 # if the returned file object is a string, this means we
+<span class="ansi-green-intense-fg ansi-bold">    654</span>                 # try to load a pickle file generated with an version of
+<span class="ansi-green-intense-fg ansi-bold">    655</span>                 # Joblib so we load it with joblib compatibility function.
+
+<span class="ansi-red-fg">TypeError</span>: expected str, bytes or os.PathLike object, not list</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
@@ -822,28 +952,28 @@
       <td>node_b</td>
       <td>x</td>
       <td>node_a</td>
-      <td>[[2, 2], [2, 2]]</td>
+      <td>[[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>node_c</td>
       <td>x</td>
       <td>node_a</td>
-      <td>[[2, 2], [2, 2]]</td>
+      <td>[[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,...</td>
     </tr>
     <tr>
       <th>2</th>
       <td>node_d</td>
       <td>a</td>
       <td>node_b</td>
-      <td>[[4, 4], [4, 4]]</td>
+      <td>[[2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0,...</td>
     </tr>
     <tr>
       <th>3</th>
       <td>node_d</td>
       <td>b</td>
       <td>node_c</td>
-      <td>[[1.0, 1.0], [1.0, 1.0]]</td>
+      <td>[[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,...</td>
     </tr>
   </tbody>
 </table>
@@ -865,7 +995,7 @@
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>info: &#39;&#39;
+<code>info: {}
 dag:
   node_a:
     name: node_a
@@ -885,10 +1015,106 @@ dag:
       x:
         type: None
         value:
-        - - 2
-          - 2
-        - - 2
-          - 2
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
     edges:
     - node_d.a
   node_c:
@@ -900,10 +1126,106 @@ dag:
       x:
         type: None
         value:
-        - - 2
-          - 2
-        - - 2
-          - 2
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+        - - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
+          - 1.0
     edges:
     - node_d.b
   node_d:
@@ -915,17 +1237,209 @@ dag:
       a:
         type: None
         value:
-        - - 4
-          - 4
-        - - 4
-          - 4
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+        - - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
+          - 2.0
       b:
         type: None
         value:
-        - - 1.0
-          - 1.0
-        - - 1.0
-          - 1.0
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+        - - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
     edges: []
 
 </code>
