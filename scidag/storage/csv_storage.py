@@ -4,10 +4,10 @@ import joblib
 from typing import Any
 import numpy as np
 import pandas as pd
-
+from scidag.utils.create_path import create_path
 from scidag.storage.base import Storage
 
-supported_types = (int, str, list, tuple, dict)  # , np.ndarray)
+supported_types = (int, str, list, tuple, dict, np.ndarray)
 
 
 class CSVStorage(Storage):
@@ -17,6 +17,7 @@ class CSVStorage(Storage):
             if data is not None
             else pd.DataFrame(columns=["target", "variable", "source", "value"])
         )
+        self.path_dir = create_path("outs")
         self._df["value"] = self._df["value"].astype(object)
 
     @classmethod
@@ -27,7 +28,10 @@ class CSVStorage(Storage):
     def store(self, source: str, value: Any) -> None:
         # TODO: Move path to init function so you could save the assets
         if type(value) not in supported_types:
-            value = joblib.dump(value, f"{source}.{type(value).__name__}.out")
+            value = joblib.dump(
+                value,
+                os.path.join(self.path_dir, f"{source}.{type(value).__name__}.pkl"),
+            )
         self._df.loc[self._df["source"] == source, "value"] = self._df.loc[
             self._df["source"] == source, "value"
         ].apply(lambda x: value)
@@ -38,8 +42,10 @@ class CSVStorage(Storage):
             df = self._df[self._df["target"] == target]
 
             def load_value(value: Any):
-                if type(value) in supported_types:
-                    return joblib.load(value)
+                if type(value) not in supported_types:
+                    # TODO: Refactor
+                    print(type(value))
+                    return joblib.load(value[0])
                 return value
 
             if df["value"].notna().all():
@@ -79,8 +85,8 @@ class CSVStorage(Storage):
         ].index[0]
         self._df = df.drop(index=index)
 
-    def save(self, path_dir: str | None = None):
-        save_path = path_dir if path_dir is not None else "./"
+    def save(self):
+        save_path = self.path_dir if self.path_dir is not None else "./"
         self._df.to_csv(os.path.join(save_path, "storage.csv"))
 
     def show(self) -> Any:

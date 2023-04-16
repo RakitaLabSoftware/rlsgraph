@@ -13,6 +13,7 @@ from scidag.storage import Storage, build_storage
 from scidag.storage.csv_storage import CSVStorage
 from scidag.utils.configurable import DagConfig, make_dag_config
 from scidag.utils.funcs import is_interactive
+from scidag.utils.create_path import create_path
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
@@ -34,6 +35,7 @@ class DAG(AGraph):
         self.edges = edges if edges is not None else Edges(self.storage)
         self.hooks = Hooks()
         self.meta = dict()
+        self.path_dir = create_path()
 
     @classmethod
     def from_config(cls, cfg: DagConfig) -> "DAG":
@@ -138,14 +140,10 @@ class DAG(AGraph):
 
     # UTILS
     def save(self) -> None:
-        dtm = datetime.now().strftime("%d-%m-%Y_%H-%M")
-        path_dir = os.path.join("configs", str(dtm))
-        if not os.path.isdir(path_dir):
-            os.makedirs(path_dir)
         OmegaConf.save(
-            self.to_config(), os.path.join(path_dir, "config.yaml"), resolve=True
+            self.to_config(), os.path.join(self.path_dir, "config.yaml"), resolve=True
         )
-        self.storage.save(path_dir)
+        self.storage.save()
 
     def get_available_nodes(self, node_name: str) -> list[str] | None:
         # Find things in StorageGraph that
