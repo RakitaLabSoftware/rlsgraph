@@ -1,11 +1,13 @@
 import asyncio
 import os
-import joblib
 from typing import Any
+
+import joblib
 import numpy as np
 import pandas as pd
-from scidag.utils.create_path import create_path
+
 from scidag.storage.base import Storage
+from scidag.utils.create_path import create_path
 
 supported_types = (int, str, list, tuple, dict, np.ndarray)
 
@@ -17,7 +19,7 @@ class CSVStorage(Storage):
             if data is not None
             else pd.DataFrame(columns=["target", "variable", "source", "value"])
         )
-        self.path_dir = create_path("outs")
+        self.path_dir = create_path()
         self._df["value"] = self._df["value"].astype(object)
 
     @classmethod
@@ -28,10 +30,13 @@ class CSVStorage(Storage):
     def store(self, source: str, value: Any) -> None:
         # TODO: Move path to init function so you could save the assets
         if type(value) not in supported_types:
+            path_dir = os.path.join(self.path_dir, "outs")
+            if not os.path.isdir(path_dir):
+                os.makedirs(path_dir)
             value = joblib.dump(
-                value,
-                os.path.join(self.path_dir, f"{source}.{type(value).__name__}.pkl"),
+                value, os.path.join(path_dir, f"{source}.{type(value).__name__}.pkl")
             )
+
         self._df.loc[self._df["source"] == source, "value"] = self._df.loc[
             self._df["source"] == source, "value"
         ].apply(lambda x: value)
@@ -42,8 +47,11 @@ class CSVStorage(Storage):
             df = self._df[self._df["target"] == target]
 
             def load_value(value: Any):
-                if type(value) not in supported_types:
+                if type(value) not in supported_types or (
+                    type(value) == np.array and value.ndim == 1
+                ):
                     # TODO: Refactor
+
                     print(type(value))
                     return joblib.load(value[0])
                 return value

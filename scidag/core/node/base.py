@@ -9,8 +9,6 @@ from scidag.storage import Storage
 from scidag.utils.configurable import NodeConfig, make_node_config
 from scidag.utils.types import AnyCallable
 
-from scidag.utils.configurable import NodeConfig
-
 
 class BaseNode(ANode):
     def __init__(self, name: str, content: AnyCallable) -> None:

@@ -47,7 +47,7 @@ redis-om = "^0.1.2"
 optional = true
 
 [tool.poetry.group.mongo.dependencies]
-motor = "^3.1.1"
+motor = "3.1.1"
 
 [tool.poetry.group.docs]
 optional=true
@@ -55,7 +55,6 @@ optional=true
 [tool.poetry.group.docs.dependencies]
 mkdocs-material = "^9.0.14"
 mkdocs-mermaid2-plugin = "^0.6.0"
-# mkdocstrings-python = "^0.8.3"
 mknotebooks = "^0.7.1"
 pytkdocs = "^0.16.1"
 mkdocs-simple-plugin = "^2.3.0"

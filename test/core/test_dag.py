@@ -1,6 +1,7 @@
+import math
+
 from scidag import DAG, Node, StartNode
 
-import math
 
 def my_sum(x, y) -> float:
     return x + y

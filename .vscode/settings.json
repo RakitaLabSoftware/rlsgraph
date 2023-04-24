@@ -6,5 +6,9 @@
     "python.testing.pytestEnabled": true,
     "yaml.schemas": {
         "https://json.schemastore.org/mkdocs-1.0.json": "file:///home/thinkpad/projects/scidag/mkdocs.yml"
-    }
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none"
 }

@@ -12,8 +12,8 @@ from scidag.core.node.nodes import Nodes
 from scidag.storage import Storage, build_storage
 from scidag.storage.csv_storage import CSVStorage
 from scidag.utils.configurable import DagConfig, make_dag_config
-from scidag.utils.funcs import is_interactive
 from scidag.utils.create_path import create_path
+from scidag.utils.funcs import is_interactive
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 

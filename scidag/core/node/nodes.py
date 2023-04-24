@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
+
 from scidag.core.base import ANode
-from scidag.core.node.node import Node
 from scidag.core.node.end_node import EndNode
+from scidag.core.node.node import Node
 from scidag.core.node.start_node import StartNode
 from scidag.storage.base import Storage
 from scidag.utils.configurable import NodeConfig

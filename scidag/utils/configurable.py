@@ -24,6 +24,7 @@ def make_variables_config(
         value = variable.value
         if isinstance(value, np.ndarray):
             value = ListConfig(value.tolist())
+            value.pretty(multiline=False)
         variable_dict[name] = VariableConfig(variable.type, value)
     return variable_dict
 
