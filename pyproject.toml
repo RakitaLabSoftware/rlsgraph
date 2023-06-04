@@ -5,6 +5,10 @@ description = "Manage your scientific workflow with a dags with ease"
 authors = ["markmno <nosanmark@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+    { include = "scidag" },
+    { include = "scidag/**/*.py" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
