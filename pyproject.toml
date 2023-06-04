@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "scidag"
+name = "rlsgraph"
 version = "0.0.1"
 description = "Manage your scientific workflow with a dags with ease"
 authors = ["markmno <nosanmark@gmail.com>"]
